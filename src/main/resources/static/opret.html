@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="bg-default h-screen w-screen overflow-x-hidden" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tadre Mølle / opret</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+</head>
+<body class="h-full w-full">
+<div class="bg-white w-100 h-20 px-default flex flex-row">
+    <h1 class="text-2xl font-bold flex items-center">Tadre Mølles Venner</h1>
+    <div class="flex-grow"></div>
+    <div class="flex items-center text-red-600">
+        <a class="px-4 hover:underline" href="/">Home</a>
+        <a class="px-4 hover:underline" href="/second-item">Second Item</a>
+        <a class="px-4 hover:underline" href="/third-item">Third Item</a>
+        <a class="px-4 hover:underline" href="/fourth-item">Fourth Item</a>
+    </div>
+</div>
+<div class="bg-white w-full text-center text-4xl flex justify-center items-center h-64">
+    Opret ny side
+</div>
+<div>
+    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+        <label for="titel">Titel</label>
+    </div>
+    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+        <input class="w-96 border-solid border-4 border-light-blue-500" type="text" id="titel" name="titel">
+    </div>
+    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+        <label for="indhold">Indhold</label>
+    </div>
+    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+        <textarea class="h-48 w-96 border-solid border-4 border-light-blue-500" type="text" id="indhold"
+                  name="indhold"></textarea>
+    </div>
+    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+        <button class="m-4">Opret</button>
+        <button class="m-4" href="/">Annuller</button>
+    </div>
+</div>
+<div>
+    <hr class="my-8 w-100"/>
+</div>
+
+</body>
+</html>
