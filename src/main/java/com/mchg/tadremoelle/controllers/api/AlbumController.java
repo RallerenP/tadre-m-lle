@@ -1,4 +1,4 @@
-package com.mchg.tadremoelle.controllers;
+package com.mchg.tadremoelle.controllers.api;
 
 import com.mchg.tadremoelle.models.Album;
 import com.mchg.tadremoelle.services.AlbumService;
@@ -22,7 +22,7 @@ public class AlbumController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/")
-    public List<Album> readAll() {
+    public List<Album> findAll() {
         return this.albumService.findAll();
     }
 

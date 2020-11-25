@@ -1,4 +1,4 @@
-package com.mchg.tadremoelle.controllers;
+package com.mchg.tadremoelle.controllers.api;
 
 import com.mchg.tadremoelle.models.Image;
 import com.mchg.tadremoelle.services.ImageService;
@@ -19,7 +19,7 @@ public class ImageController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/")
-    public Iterable<Image> readAll() {
+    public Iterable<Image> findAll() {
         System.out.println(this.imageService.findAll());
         return this.imageService.findAll();
     }
