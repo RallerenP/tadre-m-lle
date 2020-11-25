@@ -2,6 +2,7 @@ package com.mchg.tadremoelle.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 public class Album {
 
     @Id
@@ -20,12 +22,4 @@ public class Album {
     @OneToMany
     private List<Image> image;
 
-    @Override
-    public String toString() {
-        return "Album{" +
-                "id=" + id +
-                ", albumName='" + albumName + '\'' +
-                ", image=" + image +
-                '}';
-    }
 }

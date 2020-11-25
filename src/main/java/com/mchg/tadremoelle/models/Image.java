@@ -2,12 +2,14 @@ package com.mchg.tadremoelle.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 public class Image {
 
     @Id
@@ -19,12 +21,4 @@ public class Image {
     @ManyToOne
     private Album album;
 
-    @Override
-    public String toString() {
-        return "Image{" +
-                "id=" + id +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", album=" + album +
-                '}';
-    }
 }
