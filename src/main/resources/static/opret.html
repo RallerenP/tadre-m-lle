@@ -18,50 +18,62 @@
         <a class="px-4 hover:underline" href="/fourth-item">Fourth Item</a>
     </div>
 </div>
-<div class="bg-white w-full text-center text-4xl flex justify-center items-center h-64">
+<div class="bg-white w-full text-center text-4xl flex justify-center items-center h-32">
     Opret ny side
 </div>
 <div>
-    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+    <div class="w-full text-center text-4xl flex justify-center items-center">
         <label>Titel</label>
     </div>
-    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+    <div class="w-full text-center text-4xl flex justify-center items-center">
         <input class="w-96 border-solid border-4 border-light-blue-500" type="text" id="titel" name="titel">
     </div>
-    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+    <div class="w-full text-center text-4xl flex justify-center items-center">
         <label for="indhold">Indhold</label>
     </div>
-    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+    <div class="w-full text-center text-4xl flex justify-center items-center">
         <textarea class="h-48 w-96 border-solid border-4 border-light-blue-500" type="text" id="indhold"
                   name="indhold"></textarea>
     </div>
-    <div class="bg-white w-full text-center text-4xl flex justify-center items-center">
+    <div class="w-full text-center text-4xl flex justify-center items-center">
+        <button class="m-4" id="cancelButton">Annuller</button>
         <button class="m-4" id="submitButton">Opret</button>
-        <a class="m-4" href="/">Annuller</a>
     </div>
-</div>
-<div>
-    <hr class="my-8 w-100"/>
 </div>
 
 <script>
+    $('#cancelButton').click(() => window.history.back());
+
     $("#submitButton").on("click", function () {
-        let opretTitel = $("#titel").val()
-        let opretIndhold = $("#indhold").val()
-        console.log(opretTitel + " " + opretIndhold)
-    })
+        const title = $("#titel").val();
+        const content = $("#indhold").val();
+        const url = urlConverter(title);
 
-    let urlTest = "Efterår  på Tadre 2020!";
+        const data = JSON.stringify({
+            title: title,
+            content: content,
+            url: `${url}`
+        })
 
-    function urlConverter(url) {
-        let tmp = url.toLowerCase();
-        tmp = tmp.replace(/æ/g, "ae")
-        tmp = tmp.replace(/ø/g, "oe")
-        tmp = tmp.replace(/å/g, "aa")
-        return tmp.replace(/[\W_]+/g,"-");
-    }
+        $.ajax({
+            url: '/api/pages/',
+            contentType: "application/json",
+            method: 'POST',
+            data: data,
+            success: (data) => {
+                window.location.href = `/artikel/${data.url}`
+            }
+        })
 
-    console.log(urlConverter(urlTest))
+        function urlConverter(url) {
+            let tmp = url.toLowerCase();
+            tmp = tmp.replace(/æ/g, "ae")
+            tmp = tmp.replace(/ø/g, "oe")
+            tmp = tmp.replace(/å/g, "aa")
+            return tmp.replace(/[\W_]+/g,"-");
+        }
+    });
+
 
 </script>
 
