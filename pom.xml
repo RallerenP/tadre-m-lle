@@ -12,6 +12,9 @@
     <artifactId>tadre-moelle</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>tadre-moelle</name>
+    <build>
+        <finalName>${project.name}-dev</finalName>
+    </build>
     <description>Hjemmeside for Tadre Moelles Venner</description>
     <dependencies>
         <dependency>
