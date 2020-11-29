@@ -3,11 +3,15 @@ pipeline {
 
     stages {
         stage('Build') {
+            steps {
                 sh "/tadre-m-lle/mvnw clean package"
+            }
         }
 
         stage("Deploy") {
-            sh "echo Deploying..."
+            steps {
+                sh "echo deploying"
+            }
         }
     }
 
