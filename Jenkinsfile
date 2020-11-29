@@ -2,7 +2,7 @@ pipeline {
     agent { dockerfile true }
 
     environment {
-        DB_USER = credentials('DB_USER')
+        DB_USER = credentials('DB_URL')
     }
 
     stages {
