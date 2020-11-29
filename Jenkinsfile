@@ -1,10 +1,8 @@
 node {
-    agent any
+    agent { dockerfile true }
 
     stage('Build') {
-        withMaven {
-            sh "mvn clean package"
-        }
+        sh "/tadre-m-lle/mvnw clean package"
     }
 
     stage("Deploy") {

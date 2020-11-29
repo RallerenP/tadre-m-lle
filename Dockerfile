@@ -11,5 +11,4 @@ RUN apk --update add git less openssh && \
 RUN git clone https://github.com/RallerenP/tadre-m-lle.git && \
     cd tadre-m-lle && \
     git checkout rallerenp-dev && \
-    chmod +x mvnw && \
-    ./mvnw clean package
+    chmod +x mvnw
