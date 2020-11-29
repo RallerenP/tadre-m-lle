@@ -1,11 +1,14 @@
 pipeline {
     agent { dockerfile true }
 
-    stage('Build') {
-        sh "/tadre-m-lle/mvnw clean package"
+    stages {
+        stage('Build') {
+                sh "/tadre-m-lle/mvnw clean package"
+        }
+
+        stage("Deploy") {
+            sh "echo Deploying..."
+        }
     }
 
-    stage("Deploy") {
-        sh "echo Deploying..."
-    }
 }
