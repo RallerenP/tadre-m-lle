@@ -10,7 +10,7 @@ export const TadreHeader = {
                 <div class="flex-grow"></div>
                 <div class="flex items-center text-red-600">
                     <a class="px-4 hover:underline" href="/">Home</a>
-                    <a class="px-4 hover:underline" href="/second-item">Second Item</a>
+                    <a class="px-4 hover:underline" href="/galleri.html">Second Item</a>
                     <a class="px-4 hover:underline" href="/third-item">Third Item</a>
                     <a class="px-4 hover:underline" href="/fourth-item">Fourth Item</a>
                 </div>
