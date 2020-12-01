@@ -36,12 +36,21 @@
                   name="indhold"></textarea>
     </div>
     <div class="w-full text-center text-4xl flex justify-center items-center">
+        <label>Tags</label>
+    </div>
+    <div class="w-full text-center text-4xl flex justify-center items-center">
+        <input class="w-96 border-solid border-4 border-light-blue-500" type="text" id="tags" name="tags">
+        <button class="m-4" id="addTags">Tilføj tag</button>
+    </div>
+    <div class="w-full text-center text-4xl flex justify-center items-center">
         <button class="m-4" id="cancelButton">Annuller</button>
         <button class="m-4" id="submitButton">Opret</button>
     </div>
+    <div id="tagsviewer" class="w-full text-center text-4xl flex justify-center items-center"></div>
 </div>
 
 <script>
+    let tagsArray = [];
     $('#cancelButton').click(() => window.history.back());
 
     $("#submitButton").on("click", function () {
@@ -52,7 +61,8 @@
         const data = JSON.stringify({
             title: title,
             content: content,
-            url: `${url}`
+            url: `${url}`,
+            tags: tagsArray
         })
 
         $.ajax({
@@ -73,6 +83,22 @@
             return tmp.replace(/[\W_]+/g,"-");
         }
     });
+
+
+    $("#addTags").on("click", function () {
+        let tags = $("#tags").val();
+        tagsArray.push(tags);
+        console.log(tagsArray);
+        tagsOverview();
+
+        function tagsOverview (){
+            const p = document.getElementById('tagsviewer');
+            p.innerHTML = tagsArray;
+            // message.append(p);
+        }
+
+
+    })
 
 
 </script>

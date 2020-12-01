@@ -7,22 +7,17 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.List;
 
-
 @Entity
 @Getter
 @Setter
 @ToString
-public class Page {
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-
-    private String content;
-
-    private String url;
-
     @ManyToMany
-    private List<Tag> tags;
+    private List<Page> pages;
+
+    private String name;
 }
