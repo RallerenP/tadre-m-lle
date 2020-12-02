@@ -24,6 +24,11 @@ public class Album {
     @OneToMany
     private List<Image> image;
 
+    public boolean addToList(Image image) {
+        this.image.add(image);
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
