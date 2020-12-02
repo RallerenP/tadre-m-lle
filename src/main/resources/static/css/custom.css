@@ -35,3 +35,23 @@
 .bg-default {
     background: #e1d5b8;
 }
+
+h1 {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+h2 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+}
+
+h3 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}

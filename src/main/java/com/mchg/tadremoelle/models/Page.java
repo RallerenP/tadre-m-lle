@@ -4,10 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -20,7 +19,13 @@ public class Page {
 
     private String title;
 
+    @Column(columnDefinition="LONGTEXT")
     private String content;
 
     private String url;
+
+    @ManyToMany
+    private List<Tag> tags;
+
+    private String image;
 }
