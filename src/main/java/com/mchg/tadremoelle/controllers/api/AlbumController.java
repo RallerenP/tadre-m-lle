@@ -22,6 +22,7 @@ public class AlbumController {
     @CrossOrigin(origins = "*")
     @GetMapping("/")
     public List<Album> findAll() {
+        System.out.println(this.albumService.findAll());
         return this.albumService.findAll();
     }
 

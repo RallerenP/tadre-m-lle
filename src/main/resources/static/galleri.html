@@ -24,6 +24,15 @@
 </div>
 
 <a class="bg-gray-200 border border-solid border-black rounded-full py-3 px-6 mt-6" href="opretAlbum.html">Opret Album</a>
+<br>
+<p class="mt-6">Tilføj billede</p>
+<form name="fileUpload" method="POST" action="/api/images/uploadFile" enctype="multipart/form-data">
+    <label>Select File</label> <br />
+    <input type="file" name="file" />
+    <input type="submit" name="submit" value="Upload" />
+    <select name="albumsList" id="uploadListedAlbums"></select>
+</form>
+
 
 <div id="images" class="inline-block mx-48 mt-24">
 </div>
@@ -40,7 +49,15 @@
         url: "/api/albums/"
     }).done(function (data) {
         console.log(data)
+        //Render available albums for an uploaded image
+        for (let m = 0; m < data.length; m++) {
+            let albumOption = document.createElement("option");
+            albumOption.innerText = data[m].albumName;
+            albumOption.value = data[m].albumName;
+            document.getElementById("uploadListedAlbums").append(albumOption)
+        }
 
+        //Render images section
         for (let k = 0; k < data.length; k++) { // antallet af eksisterende albums
             if (data[k].image.length > 0) {
                 let albumTitle = document.createElement("h3");
@@ -51,7 +68,7 @@
                 for (let i = 0; i < data[k].image.length; i++) { //Antallet af billeder i et album
                     let imgTmp = document.createElement("img")
                     imgTmp.classList += "w-1/4 inline-block p-4"
-                    imgTmp.src = data[k].image[i].imageUrl;
+                    imgTmp.src = "/api/images/" + data[k].image[i].id;
                     imageList.appendChild(imgTmp)
                 }
             }

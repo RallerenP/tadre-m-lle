@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString
 public class Image {
 
     @Id
@@ -19,6 +19,8 @@ public class Image {
     private String imageUrl;
 
     @ManyToOne
+    @JsonIgnore
     private Album album;
+
 
 }
