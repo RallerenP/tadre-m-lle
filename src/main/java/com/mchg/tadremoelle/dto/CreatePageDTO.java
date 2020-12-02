@@ -12,7 +12,9 @@ public class CreatePageDTO {
     private String title;
     private String content;
     private String url;
+
+    private String author;
+
     private String[] tags;
     private String image;
-
 }

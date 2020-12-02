@@ -1,4 +1,4 @@
-import { html, define } from 'https://unpkg.com/hybrids@4.3.3/src/index.js';
+import { html, define } from 'https://unpkg.com/hybrids@^4/src';
 
 export const TadreHeader = {
     render: () => html`
