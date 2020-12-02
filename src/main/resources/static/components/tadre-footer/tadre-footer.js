@@ -1,4 +1,4 @@
-import { html, define, children } from 'https://unpkg.com/hybrids@4.3.3/src/index.js';
+import { html, define, children } from 'https://unpkg.com/hybrids@^4/src';
 import { TadreCopyright } from '../tadre-copyright/tadre-copyright.js'
 
 export const TadreFooter = {

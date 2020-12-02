@@ -10,19 +10,25 @@
 </head>
 <body class="h-full w-full">
 <tadre-header></tadre-header>
-<tadre-title>Admin Login</tadre-title>
+<tadre-title>Admin Dashboard</tadre-title>
 <div class="w-1/4 max-w-xl mx-auto flex flex-col justify-center my-8">
     <div class="w-full h-16 bg-red-700 hidden" id="error">VERY ERROR</div>
+    <div class="w-full h-16 bg-green-700 hidden" id="success">VERY DONE</div>
+    <h1 class="text-5xl">Tilføj ny bruger:</h1>
     <label for="username">
         <span class="block font-bold">Brugernavn</span>
         <input id="username" class="w-full border placeholder py-3 px-6 font-inter">
+    </label>
+    <label for="email">
+        <span class="block font-bold">Email</span>
+        <input id="email" type="email" class="w-full border placeholder py-3 px-6 font-inter">
     </label>
     <label for="password">
         <span class="block font-bold">Password</span>
         <input class="w-full border placeholder py-3 px-6 font-inter" id="password" type="password" />
     </label>
     <div class="w-auto my-4">
-        <button id="loginButton" class="float-right text-xl mx-2">Log Ind ➜</button>
+        <button id="loginButton" class="float-right text-xl mx-2">Opret ➜</button>
         <button id="cancelButton" class="float-right text-xl mx-2">Annullér</button>
     </div>
 </div>
@@ -35,27 +41,25 @@
     })
 
     $('#loginButton').click(() => {
-        login();
+        create();
     })
 
     $('#password').on('keyup', (e) => {
-        if (e.originalEvent.key === "Enter") login();
+        if (e.originalEvent.key === "Enter") create();
     })
 
-    const login = () => {
-        const data = { username: $('#username').val(), password: $('#password').val() }
+    const create = () => {
+        const data = { username: $('#username').val(), password: $('#password').val(), email: $('#email').val() }
 
         $.ajax({
-            url: "/api/auth/login",
+            url: "/api/auth/signup",
             method: "POST",
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: (response) => {
                 console.log(response);
                 if (response === true) {
-                    window.location.href = "/admin"
-                } else {
-                    $('#error').removeClass('hidden');
+                    $('#success').removeClass('hidden');
                 }
             },
             error: (err) => {

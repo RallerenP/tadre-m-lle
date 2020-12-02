@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HashService implements IHashService{
-    private final int rounds = 10;
+    private final int rounds = 5;
 
     @Override
     public String hash(String text) {
@@ -14,6 +14,6 @@ public class HashService implements IHashService{
 
     @Override
     public boolean verify(String hash, String text) {
-        return BCrypt.checkpw(hash, text);
+        return BCrypt.checkpw(text, hash);
     }
 }
