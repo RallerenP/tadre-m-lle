@@ -6,40 +6,39 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link href="/css/custom.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.0.2/markdown-it.min.js" integrity="sha512-7VN0JcGJWL+i8LXzTvbROqUSPzZIu8Fp6GWpkVwtHwrgWwY8CrbZgyHA2YpNhAASQNrYqGYoI2HusCqV+S2xnQ==" crossorigin="anonymous"></script>
+    <script type="module" src="/components/index.js"></script>
 </head>
 <body class="h-full w-full">
 <script type="text/template" id="artikel_template">
-    <div class="bg-white w-100 h-20 px-default flex flex-row">
-        <h1 class="text-2xl font-bold flex items-center">Tadre Mølles Venner</h1>
-        <div class="flex-grow"></div>
-        <div class="flex items-center text-red-600">
-            <a class="px-4 hover:underline" href="/">Home</a>
-            <a class="px-4 hover:underline" href="/galleri.html">Galleri</a>
-            <a class="px-4 hover:underline" href="/third-item">Third Item</a>
-            <a class="px-4 hover:underline" href="/fourth-item">Fourth Item</a>
-        </div>
+    <tadre-header></tadre-header>
+    <tadre-title><%- article.title %></tadre-title>
+    <tadre-image src=<%= article.image %>></tadre-image>
+    <div class="my-8 w-100">
     </div>
-    <div class="bg-white w-full text-center text-4xl flex justify-center items-center h-64">
-        <%- article.title %>
-    </div>
-    <div class="image-container">
-        <div class="mx-default">
-            <img src="/images/tadre.webp" alt="Billede af en vandmølle">
-        </div>
-    </div>
+    <tadre-content><%= article.markdown %></tadre-content>
     <div>
-        <hr class="my-8 w-100"/>
+        <% for (let tag of article.tags) { %>
+        #<%- tag.name %> -
+        <% } %>
     </div>
-    <div>
-        <%- article.content %>
-    </div>
+
+    <tadre-footer>
+        <tadre-copyright slot="copyright"></tadre-copyright>
+    </tadre-footer>
 </script>
+
 <script>
     $.ajax({
         url: `/api/pages/${getUrl()}`,
         method: "GET",
         success: (data) => {
+            console.log(data)
+            var md = window.markdownit();
+            var result = md.render(data.content);
+            data.markdown = result;
             render(data)
         }
     })
