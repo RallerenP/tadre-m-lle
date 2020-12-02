@@ -28,6 +28,7 @@ public class PageService {
         p.setContent(dto.getContent());
         p.setUrl(dto.getUrl());
         p.setTags( new ArrayList<Tag>() );
+        p.setImage(dto.getImage());
         for (String tagName : dto.getTags()) {
             p.getTags().add( tagService.add( tagName ));
         }

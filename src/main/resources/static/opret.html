@@ -18,6 +18,9 @@
     <div class="w-full text-center text-4xl flex justify-center items-center">
         <input class="w-96 border-solid border-4 border-light-blue-500" type="text" id="titel" name="titel">
     </div>
+    <div  class="w-full text-center text-4xl flex justify-center items-center">
+        <label><input class="w-96 border-solid border-4 border-light-blue-500" type="text" id="titel-image" name="titel-image"></label>
+    </div>
     <div class="w-full text-center text-4xl flex justify-center items-center">
         <label for="indhold">Indhold</label>
     </div>
@@ -51,12 +54,14 @@
         const title = $("#titel").val();
         const content = $("#indhold").val();
         const url = urlConverter(title);
+        const imageUrl = $("#titel-image").val();
 
         const data = JSON.stringify({
             title: title,
             content: content,
             url: `${url}`,
-            tags: tagsArray
+            tags: tagsArray,
+            image: imageUrl
         })
 
         $.ajax({

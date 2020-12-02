@@ -26,4 +26,6 @@ public class Page {
 
     @ManyToMany
     private List<Tag> tags;
+
+    private String image;
 }
