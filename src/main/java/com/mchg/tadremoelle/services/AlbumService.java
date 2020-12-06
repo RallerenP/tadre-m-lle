@@ -1,9 +1,16 @@
 package com.mchg.tadremoelle.services;
 
+import com.mchg.tadremoelle.dto.CreateAlbumDTO;
 import com.mchg.tadremoelle.models.Album;
+import com.mchg.tadremoelle.models.Image;
 import com.mchg.tadremoelle.repositories.AlbumRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +24,31 @@ public class AlbumService {
 
     public List<Album> findAll() {
         return this.albumRepository.findAll();
+    }
+
+    public Album add(CreateAlbumDTO albumDTO) {
+        if (findByName(albumDTO.getAlbumName()) == null) {
+            return this.albumRepository.save(transform(albumDTO));
+        }
+        return null;
+    }
+
+    public boolean addToExistingAlbum(Image image, String albumName) {
+        Album album = this.albumRepository.findByAlbumName(albumName);
+        album.addToList(image);
+        this.albumRepository.save(album);
+        return true;
+    }
+
+    public Album transform(CreateAlbumDTO albumDTO) {
+        Album album = new Album();
+        album.setAlbumName(albumDTO.getAlbumName());
+        album.setImage(new ArrayList<>());
+        return album;
+    }
+
+    public Album findByName(String name) {
+        return albumRepository.findByAlbumName(name);
     }
 
 }

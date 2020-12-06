@@ -6,21 +6,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Image {
-
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String imageUrl;
-
-    @ManyToOne
     @JsonIgnore
-    private Album album;
+    @ManyToMany(mappedBy="tags")
+    private List<Page> pages;
 
-
+    private String name;
 }
