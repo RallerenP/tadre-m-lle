@@ -1,5 +1,8 @@
 pipeline {
-    agent { dockerfile true }
+    agent {
+        dockerfile true
+        args: "-v /var/run/docker.sock:/var/run/docker.sock"
+    }
 
     environment {
         DB_URL = credentials('DB_URL')
