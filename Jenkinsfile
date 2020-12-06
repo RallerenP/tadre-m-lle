@@ -13,6 +13,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh "echo ${DB_URL}"
+                sh "echo ${DB_USER}"
+                sh "echo ${DB_PASS}"
                 sh "chmod +x /tadre-moelle/mvnw"
                 sh "/tadre-moelle/mvnw clean package"
             }
