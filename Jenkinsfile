@@ -13,7 +13,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "/tadre-m-lle/mvnw clean package"
+                sh "chmod +x /tadre-moelle/mvnw"
+                sh "/tadre-moelle/mvnw clean package"
             }
         }
         stage("Deploy") {
