@@ -13,17 +13,6 @@
 <tadre-header></tadre-header>
 <tadre-title>Billede Galleriet</tadre-title>
 
-<a class="bg-gray-200 border border-solid border-black rounded-full py-3 px-6 mt-6" href="opretAlbum.html">Opret Album</a>
-<br>
-<p class="mt-6">Tilføj billede</p>
-<form name="fileUpload" method="POST" action="/api/images/uploadFile" enctype="multipart/form-data">
-    <label>Select File</label> <br />
-    <input type="file" name="file" />
-    <input type="submit" name="submit" value="Upload" />
-    <select name="albumsList" id="uploadListedAlbums"></select>
-</form>
-
-
 <div id="images" class="inline-block mx-48 mt-24">
 </div>
 
@@ -43,13 +32,6 @@
         url: "/api/albums/"
     }).done(function (data) {
         console.log(data)
-        //Render available albums for an uploaded image
-        for (let m = 0; m < data.length; m++) {
-            let albumOption = document.createElement("option");
-            albumOption.innerText = data[m].albumName;
-            albumOption.value = data[m].albumName;
-            document.getElementById("uploadListedAlbums").append(albumOption)
-        }
 
         //Render images section
         for (let k = 0; k < data.length; k++) { // antallet af eksisterende albums
@@ -66,12 +48,7 @@
                     imageList.appendChild(imgTmp)
                 }
             }
-
         }
-
-
-
-
     })
 </script>
 

@@ -33,6 +33,12 @@ public class AuthController {
         return false;
     }
 
+    @GetMapping("/logout")
+    public boolean logout(HttpSession session) {
+        session.removeAttribute("user");
+        return true;
+    }
+
     @GetMapping("/me")
     public String me(@GetUser User u) {
         if (u != null) return u.getUsername();

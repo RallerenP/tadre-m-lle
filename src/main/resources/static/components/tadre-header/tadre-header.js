@@ -1,5 +1,29 @@
 import { html, define } from 'https://unpkg.com/hybrids@^4/src';
 
+export async function getUser() {
+    const response = await fetch("/api/auth/me")
+    const text = await response.text()
+    console.log(text)
+    return text;
+}
+
+function renderButton() {
+    return html.resolve(getUser().then((username) =>{
+        if (username === "None") { return html`
+        <a class="px-4 hover:underline" href="login.html">Log Ind</a>
+        `}
+        else { return html`
+        <a class="px-4 hover:underline" href="/admin">Admin Dashboard</a>
+        <button class="px-4 hover:underline" onclick="${logout}">Logout</button>
+        ` }
+    }), html`PLACEHOLDER`, 5000)
+}
+
+async function logout() {
+    await fetch("/api/auth/logout")
+    window.location.reload()
+}
+
 export const TadreHeader = {
     render: () => html`
         <link href="/css/tailwind.min.css" rel="stylesheet">
@@ -10,9 +34,10 @@ export const TadreHeader = {
                 <div class="flex-grow"></div>
                 <div class="flex items-center text-red-600">
                     <a class="px-4 hover:underline" href="/">Home</a>
-                    <a class="px-4 hover:underline" href="/galleri.html">Second Item</a>
+                    <a class="px-4 hover:underline" href="/galleri.html">Galleri</a>
                     <a class="px-4 hover:underline" href="/third-item">Third Item</a>
                     <a class="px-4 hover:underline" href="/fourth-item">Fourth Item</a>
+                    ${renderButton()}
                 </div>
             </div>
         </div>
