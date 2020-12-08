@@ -10,7 +10,7 @@
 </head>
 <body class="h-full w-full">
 <tadre-header></tadre-header>
-<tadre-title>Pris og åbningstider</tadre-title>
+<tadre-title>Pris</tadre-title>
 <div class="w-1/4 max-w-xl mx-auto flex flex-col justify-center my-8">
     <div class="w-full h-16 bg-red-700 hidden" id="error">VERY ERROR</div>
     <div class="w-full h-16 bg-green-700 hidden" id="success">VERY DONE</div>
@@ -19,9 +19,9 @@
         <span class="block font-bold">Voksne:</span>
         <input id="adult" type="number" class="w-full border placeholder py-3 px-6 font-inter">
     </label>
-    <label for="group">
+    <label for="groupx">
         <span class="block font-bold">Grupper min. 15 per.</span>
-        <input id="group" type="number" class="w-full border placeholder py-3 px-6 font-inter">
+        <input id="groupx" type="number" class="w-full border placeholder py-3 px-6 font-inter">
     </label>
     <label for="teen">
         <span class="block font-bold">Børn og unge under 18</span>
@@ -49,10 +49,10 @@
     })
 
     const update = () => {
-        const data = { adult: $('#adult').val(), teen: $('#teen').val(), group: $('#group').val() }
+        const data = { adult: $('#adult').val(), teen: $('#teen').val(), groupx: $('#groupx').val() }
 
         $.ajax({
-            url: "/api/price",
+            url: "/api/price/",
             method: "POST",
             contentType: 'application/json',
             data: JSON.stringify(data),

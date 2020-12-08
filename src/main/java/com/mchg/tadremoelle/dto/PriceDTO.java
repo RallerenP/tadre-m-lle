@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class PriceDTO {
 
-        private Long adult;
-        private Long group;
-        private Long teen;
+        private String adult;
+        private String groupx;
+        private String teen;
 }
