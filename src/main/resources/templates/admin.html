@@ -31,10 +31,21 @@
         <button id="loginButton" class="float-right text-xl mx-2">Opret ➜</button>
         <button id="cancelButton" class="float-right text-xl mx-2">Annullér</button>
     </div>
+    <h1 class="text-5xl">Billede Galleri</h1>
+    <a class="bg-gray-200 border border-solid border-black rounded-full py-3 px-6 mt-6" href="opretAlbum.html">Opret Album</a>
+    <br>
+    <p class="mt-6">Tilføj billede</p>
+    <form name="fileUpload" method="POST" action="/api/images/uploadFile" enctype="multipart/form-data">
+        <label>Select File</label> <br />
+        <input type="file" name="file" />
+        <input type="submit" name="submit" value="Upload" />
+        <select name="albumsList" id="uploadListedAlbums"></select>
+    </form>
 </div>
 <tadre-footer>
     <tadre-copyright slot="copyright"></tadre-copyright>
 </tadre-footer>
+
 <script>
     $('#cancelButton').click(() => {
         window.history.back();
@@ -67,6 +78,21 @@
             }
         })
     }
+
+    $.ajax({
+        method: "GET",
+        url: "/api/albums/"
+    }).done(function (data) {
+        console.log(data)
+        for (let m = 0; m < data.length; m++) {
+            let albumOption = document.createElement("option");
+            albumOption.innerText = data[m].albumName;
+            albumOption.value = data[m].albumName;
+            document.getElementById("uploadListedAlbums").append(albumOption)
+        }
+    })
+    //Render available albums for an uploaded image
+
 </script>
 </body>
 </html>
