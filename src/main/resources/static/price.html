@@ -52,8 +52,8 @@
         const data = { adult: $('#adult').val(), teen: $('#teen').val(), groupx: $('#groupx').val() }
 
         $.ajax({
-            url: "/api/price/",
-            method: "POST",
+            url: "/api/price/{1}",
+            method: "PUT",
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: () => {

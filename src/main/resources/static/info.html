@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="bg-default h-screen w-screen overflow-x-hidden" lang="en" xmlns:padding="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Info</title>
@@ -13,26 +13,111 @@
 <tadre-header></tadre-header>
 <tadre-title>Priser og åbningstider!</tadre-title>
 <tadre-content>
-    <div>
+
+    <div class="w-full text-left text-4xl flex justify-center items-center">
         <table>
             <tr>
-                <th>Entré</th>
+                <th class="pr-10">Entré</th>
                 <th>Pris</th>
             </tr>
             <tr>
-                <td>Voksne:</td>
-                <td>? kr</td>
+                <td class="pr-10">Voksne:</td>
+                <td id="adult"> kr</td>
             </tr>
             <tr>
-                <td>Grupper (min 15 pers):</td>
-                <td>? kr</td>
+                <td class="pr-10">Grupper (min 15 pers):</td>
+                <td id="groupx"> kr</td>
             </tr>
             <tr>
-                <td>Børn og unge under 18 år:</td>
-                <td>? kr</td>
+                <td class="pr-10">Børn og unge under 18 år:</td>
+                <td id="teen"> kr</td>
             </tr>
         </table>
     </div>
+    <div id="open" class="inline-block mx-48 mt-24">
+    </div>
+    <div class="w-full text-left text-4xl flex justify-center items-center">
+        <table>
+            <thead>
+            <tr>
+                <th class="pr-10">Dato start</th>
+                <th class="pr-10">Dato slut</th>
+                <th class="pr-10">Event</th>
+                <th class="pr-10">Tidspunkt</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="start"></td>
+                <td id="end"></td>
+                <td id="text"></td>
+                <td id="time"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!--                <tr>-->
+        <!--                    <td class="pr-10">Voksne:</td>-->
+        <!--                    <td>? kr</td>-->
+        <!--                    <td>? kr</td>-->
+        <!--                    <td>? kr</td>-->
+        <!--                </tr>-->
+        <!--            </table>-->
+        <!--        </div>-->
+    </div>
 </tadre-content>
+
+<script>
+
+    let openList = document.getElementById("open");
+
+    // $.ajax({
+    //     method: "GET",
+    //     url: "/api/openinghours/"
+    // }).done(function (data) {
+    //     console.log(data)
+    //
+    //     for (let m = 0; m < data.length; m++) {
+    //         console.log(data[m]);
+    //         document.getElementById("open").innerHTML = data;
+    //
+    //     }
+    //
+    // })
+    $.ajax({
+        method: "GET",
+        url: "/api/openinghours/"
+    }).done(function (data) {
+        let x, txt = "";
+
+        for (x in data) {
+            start = data[x].start.substr(8, 2) + " - " + data[x].start.substr(5, 2)
+            end = data[x].end.substr(8, 2) + " - " + data[x].end.substr(5, 2)
+            text = data[x].text
+            time = data[x].time;
+        }
+        document.getElementById("start").innerText = start;
+        document.getElementById("end").innerText = end;
+        document.getElementById("text").innerText = text;
+        document.getElementById("time").innerText = time;
+    })
+
+    $.ajax({
+        method: "GET",
+        url: "/api/price/"
+    }).done(function (data) {
+        let x, txt = "";
+
+        for (x in data) {
+            adult = data[x].adult;
+            groupx = data[x].groupx;
+            teen = data[x].teen;
+        }
+        document.getElementById("adult").innerText = adult;
+        document.getElementById("groupx").innerText = groupx;
+        document.getElementById("teen").innerText = teen;
+    })
+</script>
+
 </body>
 </html>

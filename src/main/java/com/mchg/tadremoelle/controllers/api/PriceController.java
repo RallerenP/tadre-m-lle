@@ -17,7 +17,7 @@ public class PriceController {
         this.priceService = priceService;
     }
 
-    @PostMapping("/")
+    @PutMapping("/{id}")
     public Price update(@RequestBody PriceDTO dto) {
         return this.priceService.update(dto);
     }
