@@ -1,41 +1,61 @@
 import {HyperHTMLElement} from "../../HyperHTML/HyperHTMLElement.min.js";
 
+const {wire} = HyperHTMLElement;
+
 export class TadreHeader extends HyperHTMLElement {
     _state = {
-        username: "Noget andet"
+        username: "None",
+        content: null
     }
+
     render() {
         this.html`
-        <link href="/css/tailwind.min.css" rel="stylesheet">
-         <link href="/css/custom.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-         <div class="bg-white w-100 h-20">
-             <div class="w-1/2 h-20 mx-auto flex flex-row" id="template_append">
-                 <h1 class="text-2xl font-bold flex items-center">Tadre Mølles Venner</h1>
-                 <div class="flex-grow"></div>
-                 <div class="flex items-center text-red-600">
-                    <a class="px-4 hover:underline" href="/">gaming</a>
+        <script src="https://kit.fontawesome.com/7bc581f92a.js" crossorigin="anonymous"></script>
+        <div class="bg-white w-100 h-20">
+            <div class="w-1/2 h-20 mx-auto flex flex-row" id="template_append">
+                <a class="text-2xl font-bold flex items-center" href="/">Tadre Mølles Venner</a>
+                <div class="flex-grow"></div>
+                <div class="flex items-center text-red-600">
+                    ${this.state().content !== null && this.state().content.map((el) => {
+                        if (el.type === "link")
+                            return wire(this, ':' + el.text)`<a class="px-4 hover:underline" href="${el.link}">${el.text}</a>`
+                        else {
+                            return wire(this, ':' + el.text)`
+                                <a ref="dropdown-${el.text}" class="px-4 hover:underline" onclick="${() => {this.openDropdown(el)}}" href="#">${el.text} <i class="fas fa-caret-down"></i></a>
+                                ${ el.isOpen ?
+                                    wire(this, ':' + el.text + "-menu")`
+                                    <div class="flex flex-col bg-default p-2" style="position: absolute; top: ${this.getElementPos(`dropdown-${el.text}`)[1]}px; left: ${this.getElementPos(`dropdown-${el.text}`)[0]}px;">
+                                    ${el.children.map((child) => {
+                                        
+                                        return wire(this, ':' + child.text)`
+                                            <a class="px-4 hover:underline" href="${child.link}">${child.text}</a>`
+                                    })}
+                                    </div>
+                                    `
+                                : 
+                                null }
+                            `    
+                        }
+                            
+                    })}
                     ${this.state().username !== "None" ?
-                        HyperHTMLElement.wire`
-                        <a class="px-4 hover:underline" href="/">Admin Dashboard</a>
-                        <button class="px-4 hover:underline" onclick="${this.logout}">Log Ud</button>`
+                        HyperHTMLElement.wire(this)` 
+                            <a class="px-4 hover:underline" href="/">Admin Dashboard</a>
+                            <button class="px-4 hover:underline" onclick="${this.logout}">Log Ud</button>
+                        `
                         :
-                        HyperHTMLElement.wire``
+                        null
                     }
-                    
-                 </div>
-             </div>
-         </div>
+                </div>
+            </div>
+        </div>
         `
     }
 
     created() {
         console.log("CREATED")
-        getUser((text) => {
-            this.setState({
-                username: text
-            })
-        })
+        this.getUser()
+        this.getContent()
     }
 
     state() {
@@ -48,37 +68,33 @@ export class TadreHeader extends HyperHTMLElement {
             ...obj
         }
         this.render()
-        console.log(this.state())
     }
 
     logout() {
         fetch("/api/auth/logout").then(() => window.location.reload())
     }
 
-}
+    openDropdown(el) {
+        for (let element of this.state().content) {
+            element.isOpen = el === element ? !element.isOpen : false;
+        }
+        this.render();
+    }
 
+    getElementPos(id) {
+        return [this.refs[id].offsetLeft + 15,this.refs[id].offsetTop+this.refs[id].offsetHeight]
+    }
 
-export async function getUser(fn) {
-    const response = await fetch("/api/auth/me")
-    const text = await response.text()
-    console.log(text)
-    fn(text)
-}
+    async getUser() {
+        const response = await fetch("/api/auth/me")
+        const text = await response.text()
+        this.setState({
+            username: text
+        })
+    }
 
-/*function renderButton() {
-    return html.resolve(getUser().then((username) =>{
-        if (username === "None") { return html`
-        <a class="px-4 hover:underline" href="login.html">Log Ind</a>
-        `}
-        else { return html`
-        <a class="px-4 hover:underline" href="/admin">Admin Dashboard</a>
-
-        ` }
-    }), html`PLACEHOLDER`, 5000)
-}*/
-
-function getJSON() {
-    return [
+    async getContent() {
+        const content = [
             {
                 text: "dropdown-menu",
                 type: "dropdown",
@@ -90,7 +106,24 @@ function getJSON() {
                         link: "/link"
                     },
                     {
-                        text: "Link2",
+                        text: "Link2fdgk.hjbrtfghjkdfdfhglfsdglhksfeddlhkgfsdeghklsdfghklfsdghjklsdfghjklfsdlgjkhfsdghkljsdfglhsfdghsdfhglsdfghlsdflhgksdflghkfsdhljksdfhjksdf",
+                        type: "link",
+                        link: "/link2"
+                    }
+                ]
+            },
+            {
+                text: "dropdown-menu2",
+                type: "dropdown",
+                isOpen: false,
+                children: [
+                    {
+                        text: "Link4",
+                        type: "link",
+                        link: "/link"
+                    },
+                    {
+                        text: "Link5",
                         type: "link",
                         link: "/link2"
                     }
@@ -102,6 +135,9 @@ function getJSON() {
                 link: "/link3"
             }
         ]
+
+        this.setState({content});
+    }
 }
 
 TadreHeader.define("tadre-header")
