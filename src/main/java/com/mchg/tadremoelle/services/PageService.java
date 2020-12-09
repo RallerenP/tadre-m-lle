@@ -21,7 +21,6 @@ public class PageService {
         this.tagService = tagService;
     }
 
-
     public Page add(CreatePageDTO dto) {
         Page p = new Page();
         p.setTitle(dto.getTitle());
