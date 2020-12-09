@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.services;
 
+import com.mchg.tadremoelle.dto.AddNavbarDTO;
 import com.mchg.tadremoelle.models.Config;
 import com.mchg.tadremoelle.repositories.ConfigRepository;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class ConfigService {
         return this.getValueByKey("navbar");
     }
 
-    public void setNavbar(String value) {
-        this.setValueByKey("navbar", value);
+    public void setNavbar(AddNavbarDTO navbar) {
+        this.setValueByKey("navbar", navbar.getNavbar());
     }
 
     private String getValueByKey(String key) {
@@ -32,5 +33,7 @@ public class ConfigService {
         }
 
         c.setValue(value);
+
+        this.configRepository.save(c);
     }
 }

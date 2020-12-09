@@ -1,10 +1,10 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.GetUser;
+import com.mchg.tadremoelle.dto.AddNavbarDTO;
+import com.mchg.tadremoelle.models.User;
 import com.mchg.tadremoelle.services.ConfigService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,8 +23,10 @@ public class NavbarController {
     }
 
     @PostMapping("/navbar")
-    public String setNavbarLinks(HttpServletRequest request) {
-//        return this.configService.setNavbar();
-        return null;
+    public void setNavbarLinks(@RequestBody AddNavbarDTO navbarDTO, @GetUser User user) {
+        if (user == null) {
+            return;
+        }
+        configService.setNavbar(navbarDTO);
     }
 }
