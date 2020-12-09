@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="bg-default h-screen w-screen overflow-x-hidden" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Opret Album</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link href="/css/custom.css" rel="stylesheet">
+    <script type="module" src="/components/index.js"></script>
 </head>
-<body>
+
+<body class="h-full w-full">
+<tadre-header></tadre-header>
+<tadre-title>Opret album</tadre-title>
 
 <div>
     <div class="w-full text-center text-4xl flex-col flex justify-center items-center">
@@ -15,35 +20,58 @@
         <br>
         <input type="text" class="border" maxlength="25" id="albumInput" placeholder="Indsæt album navn her">
         <div class="hidden text-red-500" id="error">Dette album navn findes allerede!</div>
+        <div class="w-auto">
+            <button id="submitButton" class="float-right text-xl mx-2">Opret</button>
+        </div>
     </div>
-    <div class="w-full text-center text-4xl flex justify-center items-center">
-        <a class="m-4" id="cancelButton" href="galleri.html">Annuller</a>
-        <button class="m-4" id="submitButton">Opret</button>
+
+    <div class="w-1/4 max-w-xl mx-auto flex flex-col justify-center my-8">
+        <p class="w-full text-center text-4xl flex-col flex justify-center items-center">Tilføj billede</p>
+        <form name="fileUpload" method="POST" action="/api/images/uploadFile" enctype="multipart/form-data">
+            <label>Select File</label> <br/>
+            <input type="file" name="file"/>
+            <input type="submit" name="submit" value="Upload"/>
+            <select name="albumsList" id="uploadListedAlbums"></select>
+        </form>
+        <div class="w-auto my-4">
+            <button onclick="window.location.href='galleri.html'" class="float-right text-xl mx-2">Galleri ➜</button>
+            <button onclick="window.location.href='dashBoard.html'" class="float-right text-xl mx-2">Dashborad</button>
+        </div>
     </div>
+    <tadre-footer>
+        <tadre-copyright slot="copyright"></tadre-copyright>
+    </tadre-footer>
 </div>
 
-
 <script>
-
     $('#submitButton').on("click", function () {
-
         $.ajax({
             url: '/api/albums/',
             contentType: "application/json",
             method: 'POST',
-            data: JSON.stringify({ albumName: $('#albumInput').val() }),
+            data: JSON.stringify({albumName: $('#albumInput').val()}),
             success: (data) => {
                 console.log(data)
-                window.location.href = "/galleri.html"
+                window.location.href = "/opretAlbum.html"
             },
             error: (xhr, status) => {
                 $('#error').removeClass("hidden")
                 console.log("DUPLICATED DATA")
             }
         })
+    })
 
-
-
+    $.ajax({
+        method: "GET",
+        url: "/api/albums/"
+    }).done(function (data) {
+        console.log(data)
+        for (let m = 0; m < data.length; m++) {
+            let albumOption = document.createElement("option");
+            albumOption.innerText = data[m].albumName;
+            albumOption.value = data[m].albumName;
+            document.getElementById("uploadListedAlbums").append(albumOption)
+        }
     })
 
 </script>

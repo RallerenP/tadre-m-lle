@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="bg-default h-screen w-screen overflow-x-hidden" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>openinghours</title>
@@ -62,7 +62,7 @@
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: () => {
-                window.location.href = "/api/dashboard.html" //TODO
+                window.location.href = "dashBoard.html"
             },
             error: (err) => {
                 $('#error').removeClass('hidden');
