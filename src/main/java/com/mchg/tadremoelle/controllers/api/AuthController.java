@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.GetUser;
 import com.mchg.tadremoelle.dto.AddUserDTO;
 import com.mchg.tadremoelle.dto.LoginDTO;
 import com.mchg.tadremoelle.models.User;
@@ -27,13 +28,19 @@ public class AuthController {
             session.setAttribute("user", u);
             return true;
         }
+
         response.setStatus(403);
         return false;
     }
 
+    @GetMapping("/logout")
+    public boolean logout(HttpSession session) {
+        session.removeAttribute("user");
+        return true;
+    }
+
     @GetMapping("/me")
-    public String me(HttpSession session) {
-        User u = (User) session.getAttribute("user");
+    public String me(@GetUser User u) {
         if (u != null) return u.getUsername();
         else return "None";
     }

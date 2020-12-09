@@ -24,9 +24,7 @@ public class PageController {
 
     @GetMapping("/{url}")
     public Page findByUrl(@PathVariable("url") String url) {
-        System.out.println(url);
         Page p = this.pageService.findByUrl(url);
-        System.out.println(p);
         return p;
     }
 
