@@ -45,13 +45,19 @@
 </tadre-footer>
 
 <script>
-    const listOfLinks = [{
-        text: "Google",
-        link: "https://www.google.com"},
-        {
-        text: "Youtube",
-        link: "https://www.youtube.com/"
-    }]
+    let listOfLinks;
+    //     text: "Youtube",
+    //     link: "https://www.youtube.com/"
+    // }]
+
+    async function getPages() {
+        const response = await fetch("/api/pages/");
+        const pages = await response.json();
+        listOfLinks = pages.map((page) => {
+            return {text: page.title, link: `/artikel/${page.url}`}
+        })
+        renderListElement();
+    }
 
     const listOfAddedLinks = []
 
@@ -112,7 +118,6 @@
         }
     }
 
-    renderListElement();
 
 
     $('#submitButton').on("click", () => {
@@ -124,6 +129,7 @@
         })
     })
 
+    getPages();
 
 </script>
 

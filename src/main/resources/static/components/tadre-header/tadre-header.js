@@ -94,48 +94,9 @@ export class TadreHeader extends HyperHTMLElement {
     }
 
     async getContent() {
-        const content = [
-            {
-                text: "dropdown-menu",
-                type: "dropdown",
-                isOpen: false,
-                children: [
-                    {
-                        text: "Link",
-                        type: "link",
-                        link: "/link"
-                    },
-                    {
-                        text: "Link2fdgk.hjbrtfghjkdfdfhglfsdglhksfeddlhkgfsdeghklsdfghklfsdghjklsdfghjklfsdlgjkhfsdghkljsdfglhsfdghsdfhglsdfghlsdflhgksdflghkfsdhljksdfhjksdf",
-                        type: "link",
-                        link: "/link2"
-                    }
-                ]
-            },
-            {
-                text: "dropdown-menu2",
-                type: "dropdown",
-                isOpen: false,
-                children: [
-                    {
-                        text: "Link4",
-                        type: "link",
-                        link: "/link"
-                    },
-                    {
-                        text: "Link5",
-                        type: "link",
-                        link: "/link2"
-                    }
-                ]
-            },
-            {
-                text: "Link3",
-                type: "link",
-                link: "/link3"
-            }
-        ]
-
+        const response = await fetch("/api/config/navbar");
+        const content = await response.json();
+        console.log(content)
         this.setState({content});
     }
 }
