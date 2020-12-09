@@ -18,6 +18,7 @@ public class PriceService {
 
     public Price update(PriceDTO dto) {
         Price p = new Price();
+        p.setId( (long) dto.getId() );
         p.setAdult(dto.getAdult());
         p.setGroupx(dto.getGroupx());
         p.setTeen(dto.getTeen());
