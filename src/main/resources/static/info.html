@@ -14,7 +14,7 @@
 <tadre-title>Priser og åbningstider!</tadre-title>
 <tadre-content>
 
-    <div class="w-full text-left text-4xl flex justify-center items-center">
+    <div class="w-full text-left text-1xl flex justify-center items-center">
         <table>
             <tr>
                 <th class="pr-10">Entré</th>
@@ -36,22 +36,22 @@
     </div>
     <div id="open" class="inline-block mx-48 mt-24">
     </div>
-    <div class="w-full text-left text-4xl flex justify-center items-center">
+    <div class="w-full text-left text-1xl flex justify-center items-center">
         <table>
             <thead>
             <tr>
-                <th class="pr-10">Dato start</th>
-                <th class="pr-10">Dato slut</th>
-                <th class="pr-10">Event</th>
-                <th class="pr-10">Tidspunkt</th>
+                <th class="pr-5">Dato start</th>
+                <th class="pr-5">Dato slut</th>
+                <th class="pr-5">Event</th>
+                <th class="pl-5">Tidspunkt</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="my-table">
             <tr>
                 <td id="start"></td>
                 <td id="end"></td>
                 <td id="text"></td>
-                <td id="time"></td>
+                <td class="pl-5" id="time"></td>
             </tr>
             </tbody>
         </table>
@@ -95,11 +95,16 @@
             end = data[x].end.substr(8, 2) + " - " + data[x].end.substr(5, 2)
             text = data[x].text
             time = data[x].time;
+
+            $('#my-table').append(
+                $('<tr></tr>').append(
+                    $('<td></td>').html(document.createElement("start").innerText = start),
+                    $('<td></td>').html(document.createElement("end").innerText = end),
+                    $('<td></td>').html(document.createElement("text").innerText = text),
+                    $('<td class="pl-5"></td>').html(document.createElement("time").innerText = time),
+                )
+            );
         }
-        document.getElementById("start").innerText = start;
-        document.getElementById("end").innerText = end;
-        document.getElementById("text").innerText = text;
-        document.getElementById("time").innerText = time;
     })
 
     $.ajax({
@@ -113,9 +118,10 @@
             groupx = data[x].groupx;
             teen = data[x].teen;
         }
-        document.getElementById("adult").innerText = adult;
-        document.getElementById("groupx").innerText = groupx;
-        document.getElementById("teen").innerText = teen;
+
+        document.getElementById("adult").innerText = adult + " kr";
+        document.getElementById("groupx").innerText = groupx + " kr";
+        document.getElementById("teen").innerText = teen + " kr";
     })
 </script>
 
