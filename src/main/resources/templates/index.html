@@ -15,5 +15,15 @@
     <tadre-footer>
         <tadre-copyright slot="copyright"></tadre-copyright>
     </tadre-footer>
+
+    <script>
+        let tadreHeader = document.getElementsByTagName("tadre-header")[0]
+        tadreHeader.addEventListener("open-dropdown", ({detail}) => {
+            tadreHeader.links = detail
+            console.log(detail)
+            setTimeout(() => tadreHeader.render(tadreHeader), 0)
+            console.log(tadreHeader.render(tadreHeader))
+        })
+    </script>
 </body>
 </html>
