@@ -10,8 +10,8 @@ RUN mkdir /datapath/
 #Add SSH (For deployment step)
 #RUN apk add openssh
 
-# Add Git
-RUN apk --update add git less openssh && \
+# Add Git & Docker
+RUN apk --update add git less openssh docker && \
     rm -rf /var/lib/apt/lists/* && \
     rm /var/cache/apk/*
 
