@@ -18,12 +18,12 @@ pipeline {
             steps {
                 sh "chmod +x /tadre-moelle/mvnw"
                 sh "mkdir /build/"
-                sh "/tadre-moelle/mvnw clean package -DoutputDirectory=/build/"
+                sh "/tadre-moelle/mvnw clean package"
             }
         }
         stage("Deploy") {
             steps {
-                sh 'ls'
+                sh 'ls /var/jenkins_home/workspace/tadre/target/'
                  //sh "echo ${SSH_KEY} > keyfile.pem"
                  //sh "sudo chmod 400 keyfile.pem"
                  //sh "scp -i keyfile.pem  ${SSH_USER}@${SSH_HOST}/keyfile.pem /tadre-moelle/target/"
