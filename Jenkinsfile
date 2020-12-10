@@ -17,7 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 withMaven {
-                    sh 'cd tadre-moelle && mvn clean package'
+                    sh 'mvn clean package'
                 }
             }
         }
