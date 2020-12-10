@@ -20,6 +20,17 @@ pipeline {
                 sh "/tadre-moelle/mvnw clean package"
             }
         }
+        stage('Prepare') {
+            steps {
+                sh "mkdir /deploy/"
+                sh "cp /var/jenkins_home/workspace/tadre/target/tadre-moelle-0.0.1-SNAPSHOT.jar /deploy/app.jar"
+                sh "cp /tadre-moelle/prep/Dockerfile /deploy/"
+                sh "sudo docker build -t tadre:latest"
+                sh "sudo docker save tadre:latest > tadre.tar"
+                sh "ls /deploy/"
+            }
+        }
+
         stage("Deploy") {
             steps {
                 sh 'ls /var/jenkins_home/workspace/tadre/target/'
