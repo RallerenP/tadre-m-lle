@@ -5,4 +5,3 @@ ENV DATA_PATH /datapath/
 
 run ls
 
-ENTRYPOINT ["java","-jar","/app.jar"]
