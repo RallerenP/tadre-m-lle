@@ -1,6 +1,5 @@
 package com.mchg.tadremoelle.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,14 +9,14 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Tag {
+public class Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy="tags")
-    private List<Page> pages;
+    @Column(name = "config_key")
+    private String key;
 
-    private String name;
+    @Column(length = 2000000)
+    private String value;
 }

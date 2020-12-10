@@ -20,8 +20,6 @@ public class TagController {
 
     @PostMapping("/")
     public Tag add(@RequestBody CreateTagDTO dto) {
-        System.out.println(dto);
-        System.out.println("Hallo");
         return this.tagService.add(dto);
     }
 }
