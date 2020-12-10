@@ -32,7 +32,7 @@ pipeline {
                     sh "ls /"
                     sh "ls /deploy/"
                     sh "scp -v -o StrictHostKeyChecking=no /deploy/tadre.tar ubuntu@3.239.98.129:/tadre/tadre.tar"
-                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.239.98.129 'sudo docker stop tadre || true && sudo docker load < /tadre/tadre.tar && sudo docker run --name tadre -p 8081:80 -v /tmp/:/datapath/ --rm --env DB_URL=\${DB_URL} --env DB_USER=\${DB_USER} --env DB_PASS=\${DB_PASS}' --restart unless-stopped tadre:latest"
+                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.239.98.129 'sudo docker stop tadre || true && sudo docker load < /tadre/tadre.tar && sudo docker run --name tadre -p 8081:80 -v /tmp/:/datapath/ --rm --env DB_URL=\${DB_URL} --env DB_USER=\${DB_USER} --env DB_PASS=\${DB_PASS}' tadre:latest"
                 }
             }
         }
