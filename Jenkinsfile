@@ -23,6 +23,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 sh "mkdir /deploy/"
+                sh "ls /tadre-moelle"
                 sh "cp /var/jenkins_home/workspace/tadre/target/tadre-moelle-0.0.1-SNAPSHOT.jar /deploy/app.jar"
                 sh "cp /tadre-moelle/prep/Dockerfile /deploy/"
                 sh "sudo docker build -t tadre:latest"
