@@ -16,8 +16,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "chmod +x /tadre-moelle/mvnw"
-                sh "/tadre-moelle/mvnw clean package"
+                withMaven {
+                    sh 'cd tadre-moelle && mvn clean package'
+                }
             }
         }
         stage("Deploy") {
