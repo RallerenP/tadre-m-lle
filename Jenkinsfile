@@ -31,7 +31,7 @@ pipeline {
                 sshagent(credentials: ['SSH_CREDENTIALS']) {
                     sh "ls /"
                     sh "ls /deploy/"
-                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.239.98.129 'sudo rm -rf /tadre/'"
+                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.239.98.129 'sudo rm -rf /tadre/ && mkdir /tadre && sudo chmod 777 /tadre'"
                     sh "scp -v -o StrictHostKeyChecking=no /deploy/tadre.tar ubuntu@3.239.98.129:/tadre/tadre.tar"
                     sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.239.98.129 'sudo docker stop tadre || true && sudo docker rm tadre || true && sudo docker rmi tadre:latest || true && sudo docker load < /tadre/tadre.tar && sudo docker create --name tadre -p 8081:80 -v /tmp/:/datapath/ --env DB_URL=\${DB_URL} --env DB_USER=\${DB_USER} --env DB_PASS=\${DB_PASS} tadre:latest && sudo docker start tadre'"
                 }
