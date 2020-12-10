@@ -32,14 +32,10 @@ pipeline {
         stage("Deploy") {
             
             steps {
-                script {
-                    def remote = [name: credentials('SSH_HOST'), user: credentials('SSH_USER'), identity: credentials('SSH_KEY')]
-                    sshPut remote: remote, from: "/deploy/tadre.tar", into: "/tadre/"
-                    sshCommand remote: remote, command: "ls /tadre/"
-                }
-                 //sh "echo ${SSH_KEY} > keyfile.pem"
-                 //sh "sudo chmod 400 keyfile.pem"
-                 //sh "scp -i keyfile.pem  ${SSH_USER}@${SSH_HOST}/keyfile.pem /tadre-moelle/target/"
+                 sh "echo ${SSH_KEY} > keyfile.pem"
+                 sh "cat keyfile.pem"
+                 sh "sudo chmod 400 keyfile.pem"
+                 sh "scp -i keyfile.pem /deploy/tadre.tar ${SSH_USER}@${SSH_HOST}:/tadre/ "
             }
         }
     }
