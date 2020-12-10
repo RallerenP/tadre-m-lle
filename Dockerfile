@@ -19,5 +19,5 @@ RUN apk --update add git less openssh && \
 RUN git clone https://github.com/RallerenP/tadre-m-lle.git tadre-moelle && \
     cd tadre-moelle && \
     git checkout rallerenp-dev && \
-    git pull origin ralleren-dev && \
+    git pull origin rallerenp-dev && \
     chmod +x mvnw
