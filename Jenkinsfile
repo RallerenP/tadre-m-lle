@@ -20,6 +20,8 @@ pipeline {
             steps {
                 sh "mkdir /deploy/"
                 sh "cp /var/jenkins_home/workspace/tadre/target/tadre-moelle-0.0.1-SNAPSHOT.jar /deploy/app.jar"
+                sh "cd /tadre-moelle/ && git pull origin rallerenp-dev"
+                sh "cat /tadre-moelle/prep/Dockerfile"
                 sh "cp /tadre-moelle/prep/Dockerfile /deploy/"
                 sh "cat /deploy/Dockerfile"
                 sh "docker rmi tadre:latest || true"
