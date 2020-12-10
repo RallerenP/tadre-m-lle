@@ -22,7 +22,7 @@ pipeline {
         }
         stage("Deploy") {
             steps {
-                sh 'ls /tadre-moelle/target'
+                sh 'ls /tadre-moelle/'
                  //sh "echo ${SSH_KEY} > keyfile.pem"
                  //sh "sudo chmod 400 keyfile.pem"
                  //sh "scp -i keyfile.pem  ${SSH_USER}@${SSH_HOST}/keyfile.pem /tadre-moelle/target/"
