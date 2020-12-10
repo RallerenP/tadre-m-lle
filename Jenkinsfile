@@ -32,7 +32,7 @@ pipeline {
                     sh "ls /"
                     sh "ls /deploy/"
                     sh "scp -v -o StrictHostKeyChecking=no /deploy/tadre.tar ubuntu@3.238.174.161:/tadre/tadre.tar"
-                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.238.174.161 'sudo docker load /tadre/tadre.tar'"
+                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.238.174.161 'sudo docker load -i /tadre/tadre.tar'"
                 }
             }
         }
