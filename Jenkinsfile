@@ -16,14 +16,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                withMaven {
-                    sh 'mvn clean package'
-                }
+                sh "chmod +x /tadre-moelle/mvnw"
+                sh "/tadre-moelle/mvnw clean package"
             }
         }
         stage("Deploy") {
             steps {
-                sh 'ls /tadre-moelle/'
+                sh 'ls'
                  //sh "echo ${SSH_KEY} > keyfile.pem"
                  //sh "sudo chmod 400 keyfile.pem"
                  //sh "scp -i keyfile.pem  ${SSH_USER}@${SSH_HOST}/keyfile.pem /tadre-moelle/target/"
