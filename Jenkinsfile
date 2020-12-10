@@ -31,8 +31,8 @@ pipeline {
                 sshagent(credentials: ['SSH_CREDENTIALS']) {
                     sh "ls /"
                     sh "ls /deploy/"
-                    sh "scp -v -o StrictHostKeyChecking=no /deploy/tadre.tar ubuntu@3.238.174.161:/tadre/tadre.tar"
-                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.238.174.161 'sudo docker load < /tadre/tadre.tar'"
+                    sh "scp -v -o StrictHostKeyChecking=no /deploy/tadre.tar ubuntu@3.239.98.129:/tadre/tadre.tar"
+                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@3.239.98.129 'sudo docker load < /tadre/tadre.tar'"
                 }
             }
         }
