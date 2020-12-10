@@ -3,4 +3,4 @@ FROM openjdk:8-jdk-alpine
 COPY app.jar /app.jar
 ENV DATA_PATH /datapath/
 
-ENTRYPOINT java -jar  > /tadrestatus
+ENTRYPOINT java -jar /app.jar > /tadrestatus
