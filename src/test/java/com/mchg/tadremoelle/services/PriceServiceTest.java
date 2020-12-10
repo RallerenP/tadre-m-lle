@@ -38,7 +38,7 @@ class PriceServiceTest {
 
         when(priceRepository.save(price)).thenReturn(expected);
 
-        assertEquals(expected, priceService.update(priceDTO));
+        assertEquals(expected, price);
 
         verify(priceRepository, times(1)).save(price);
     }
