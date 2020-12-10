@@ -20,22 +20,23 @@ pipeline {
                 sh "/tadre-moelle/mvnw clean package"
             }
         }
-        stage('Prepare') {
+        stage('Prepare Deployment') {
             steps {
                 sh "mkdir /deploy/"
-                sh "ls /tadre-moelle"
-                sh "whoami"
                 sh "cp /var/jenkins_home/workspace/tadre/target/tadre-moelle-0.0.1-SNAPSHOT.jar /deploy/app.jar"
                 sh "cp /tadre-moelle/prep/Dockerfile /deploy/"
                 sh "docker build -t tadre:latest /deploy/"
                 sh "docker save -o /deploy/tadre.tar tadre:latest"
-                sh "ls /deploy/"
             }
         }
-
         stage("Deploy") {
+            
             steps {
-                sh 'ls /var/jenkins_home/workspace/tadre/target/'
+                script {
+                    def remote = [name: credentials('SSH_HOST'), user: credentials('SSH_USER'), identity: credentials('SSH_KEY')]
+                    sshPut remote: remote, from: "/deploy/tadre.tar", into: "/tadre/"
+                    sshCommand remote: remote, command: "ls /tadre/"
+                }
                  //sh "echo ${SSH_KEY} > keyfile.pem"
                  //sh "sudo chmod 400 keyfile.pem"
                  //sh "scp -i keyfile.pem  ${SSH_USER}@${SSH_HOST}/keyfile.pem /tadre-moelle/target/"
