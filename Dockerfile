@@ -21,3 +21,6 @@ RUN git clone https://github.com/RallerenP/tadre-m-lle.git tadre-moelle && \
     git checkout rallerenp-dev && \
     git pull origin rallerenp-dev && \
     chmod +x mvnw
+
+#Add root to docker group (maybe not necessary)
+run addgroup root docker
