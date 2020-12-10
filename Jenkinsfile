@@ -36,7 +36,7 @@ pipeline {
                 sh "ls /deploy/"
                 sh "echo ${SSH_KEY} > keyfile.pem"
                 sh "cat keyfile.pem"
-                sh "sudo chmod 400 keyfile.pem"
+                sh "chmod 400 keyfile.pem"
                 sh "scp -i keyfile.pem /deploy/tadre.tar ${SSH_USER}@${SSH_HOST}:/tadre/ "
             }
         }
