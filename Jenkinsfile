@@ -17,7 +17,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh "chmod +x /tadre-moelle/mvnw"
-                sh "mkdir /build/"
                 sh "/tadre-moelle/mvnw clean package"
             }
         }
