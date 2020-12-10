@@ -7,10 +7,6 @@ pipeline {
         DB_URL = credentials('DB_URL')
         DB_USER = credentials('DB_USER')
         DB_PASS = credentials('DB_PASS')
-
-        SSH_HOST = credentials('SSH_HOST')
-        SSH_USER = credentials('SSH_USER')
-        SSH_KEY = credentials('SSH_KEY')
     }
 
     stages {
@@ -35,7 +31,7 @@ pipeline {
                 sshagent(credentials: ['SSH_CREDENTIALS']) {
                     sh "ls /"
                     sh "ls /deploy/"
-                    sh "scp /deploy/tadre.tar ${SSH_USER}@${SSH_HOST}:/tadre/ "
+                    sh "scp /deploy/tadre.tar ubuntu@3.238.174.161:/tadre/ "
                 }
             }
         }
