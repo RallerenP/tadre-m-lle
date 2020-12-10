@@ -32,7 +32,7 @@ pipeline {
         stage("Deploy") {
             
             steps {
-                sshagent {
+                sshagent(credentials: ['SSH_CREDENTIALS']) {
                     sh "ls /"
                     sh "ls /deploy/"
                     sh "scp /deploy/tadre.tar ${SSH_USER}@${SSH_HOST}:/tadre/ "
