@@ -46,9 +46,6 @@
 
 <script>
     let listOfLinks;
-    //     text: "Youtube",
-    //     link: "https://www.youtube.com/"
-    // }]
 
     async function getPages() {
         const response = await fetch("/api/pages/");
@@ -56,6 +53,7 @@
         listOfLinks = pages.map((page) => {
             return {text: page.title, link: `/artikel/${page.url}`}
         })
+        listOfLinks.push({text: "Galleri", link: "/galleri.html"}, {text: "Information", link: "/info.html"})
         renderListElement();
     }
 
