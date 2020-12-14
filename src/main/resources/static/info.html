@@ -47,23 +47,15 @@
             </tr>
             </thead>
             <tbody id="my-table">
-            <tr>
-                <td id="start"></td>
-                <td id="end"></td>
-                <td id="text"></td>
-                <td class="pl-5" id="time"></td>
-            </tr>
+<!--            <tr>-->
+<!--                <td id="start"></td>-->
+<!--                <td id="end"></td>-->
+<!--                <td id="text"></td>-->
+<!--                <td class="pl-5" id="time"></td>-->
+<!--            </tr>-->
             </tbody>
         </table>
 
-        <!--                <tr>-->
-        <!--                    <td class="pr-10">Voksne:</td>-->
-        <!--                    <td>? kr</td>-->
-        <!--                    <td>? kr</td>-->
-        <!--                    <td>? kr</td>-->
-        <!--                </tr>-->
-        <!--            </table>-->
-        <!--        </div>-->
     </div>
 </tadre-content>
 
@@ -71,19 +63,7 @@
 
     let openList = document.getElementById("open");
 
-    // $.ajax({
-    //     method: "GET",
-    //     url: "/api/openinghours/"
-    // }).done(function (data) {
-    //     console.log(data)
-    //
-    //     for (let m = 0; m < data.length; m++) {
-    //         console.log(data[m]);
-    //         document.getElementById("open").innerHTML = data;
-    //
-    //     }
-    //
-    // })
+
     $.ajax({
         method: "GET",
         url: "/api/openinghours/"
