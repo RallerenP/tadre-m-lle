@@ -42,6 +42,11 @@ public class ImageController {
         return Files.readAllBytes(fi.toPath());
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteImage(@PathVariable("id") Long id) {
+        imageService.deleteImage(id);
+    }
+
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
     public String uploadFile(@RequestParam("file")MultipartFile file, @RequestParam("albumsList") String albumName) {

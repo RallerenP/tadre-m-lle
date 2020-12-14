@@ -31,24 +31,44 @@
         method: "GET",
         url: "/api/albums/"
     }).done(function (data) {
-        console.log(data)
 
-        //Render images section
-        for (let k = 0; k < data.length; k++) { // antallet af eksisterende albums
-            if (data[k].image.length > 0) {
-                let albumTitle = document.createElement("h3");
-                albumTitle.textContent = data[k].albumName;
-                albumTitle.classList += "px-4 font-bold text-4xl"
-                imageList.appendChild(albumTitle);
+        $.ajax({
+            method: "GET",
+            url: "/api/auth/me"
+        }).done(function (authData) {
+            //Render images section
+            for (let k = 0; k < data.length; k++) { // antallet af eksisterende albums
+                if (data[k].image.length > 0) {
+                    let albumTitle = document.createElement("h3");
+                    albumTitle.textContent = data[k].albumName;
+                    albumTitle.classList += "px-4 font-bold text-4xl"
+                    imageList.appendChild(albumTitle);
 
-                for (let i = 0; i < data[k].image.length; i++) { //Antallet af billeder i et album
-                    let imgTmp = document.createElement("img")
-                    imgTmp.classList += "w-1/4 inline-block p-4"
-                    imgTmp.src = "/api/images/" + data[k].image[i].id;
-                    imageList.appendChild(imgTmp)
+                    for (let i = 0; i < data[k].image.length; i++) { //Antallet af billeder i et album
+                        let imgTmp = document.createElement("img")
+                        imgTmp.classList += "w-1/4 inline-block p-4"
+                        imgTmp.src = "/api/images/" + data[k].image[i].id;
+                        imageList.appendChild(imgTmp)
+
+                        //If user is admin, render remove button
+                        if (authData !== "None") {
+                            let removeButton = document.createElement("button")
+                            removeButton.innerText = "X"
+                            removeButton.classList += "w-2 h-2 inline-block p-4"
+                            removeButton.addEventListener("click", () => {
+                                $.ajax({
+                                    method: "DELETE",
+                                    url: "/api/images/" + data[k].image[i].id
+                                })
+                            })
+                            imageList.append(removeButton)
+                        }
+                    }
                 }
             }
-        }
+        })
+
+
     })
 </script>
 
