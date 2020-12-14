@@ -16,7 +16,7 @@ export class TadreHeader extends HyperHTMLElement {
                 <a class="text-2xl font-bold flex items-center" href="/">Tadre Mølles Venner</a>
                 <div class="flex-grow"></div>
                 <div class="flex items-center text-red-600">
-                    ${this.state().content !== null && this.state().content.map((el) => {
+                    ${this.state().content !== null ? this.state().content.map((el) => {
                         if (el.type === "link")
                             return wire(this, ':' + el.text)`<a class="px-4 hover:underline" href="${el.link}">${el.text}</a>`
                         else {
@@ -37,10 +37,10 @@ export class TadreHeader extends HyperHTMLElement {
                             `    
                         }
                             
-                    })}
+                    }): ''}
                     ${this.state().username !== "None" ?
                         HyperHTMLElement.wire(this)` 
-                            <a class="px-4 hover:underline" href="/">Admin Dashboard</a>
+                            <a class="px-4 hover:underline" href="/admin">Admin Dashboard</a>
                             <button class="px-4 hover:underline" onclick="${this.logout}">Log Ud</button>
                         `
                         :
@@ -95,8 +95,13 @@ export class TadreHeader extends HyperHTMLElement {
 
     async getContent() {
         const response = await fetch("/api/config/navbar");
-        const content = await response.json();
-        console.log(content)
+        let content;
+        try {
+            content = await response.json();
+        } catch (e) {
+            return [];
+        }
+
         this.setState({content});
     }
 }
