@@ -39,6 +39,10 @@
         <div id="preview" class="rounded border" style="min-height: 48px;">
 
         </div>
+        <div id="tags" class="p-2 flex flex-wrap">
+            <input id="tag-input" placeholder="Indtast nyt tag..." class="flex-grow text-2xl px-4">
+        </div>
+
         <div class="flex mt-2">
             <div class="flex-grow"></div>
             <button id="cancelButton" class="w-16 mx-1 rounded bg-red-500 text-white">Cancel</button>
@@ -53,6 +57,8 @@
 </tadre-footer>
 
 <script>
+    const tagsArray = [];
+
     function updatePreview() {
         const md = window.markdownit();
         const result = md.render($('#content').val());
@@ -270,6 +276,46 @@
         updatePreview()
     }
 
+    function updateTags(e) {
+        if (e.originalEvent.key === "Enter") {
+            const value = e.currentTarget.value;
+
+            if (tagsArray.indexOf(value) !== -1) return;
+
+            tagsArray.push(value);
+
+            renderTags();
+        } else if (e.originalEvent.key === "Backspace") {
+            if (e.currentTarget.value.length === 0) {
+                tagsArray.pop();
+                renderTags();
+            }
+        };
+
+
+    }
+
+    function removeTag(tag) {
+        tagsArray.splice(tagsArray.indexOf(tag));
+        renderTags();
+    }
+
+    function renderTags() {
+        $('#tags').empty();
+
+        for (const tag of tagsArray) {
+            $('#tags').append(`<div class="bg-gray-300 flex-shrink-0 rounded m-2 p-2">${tag} <button id="tag-${tag}"><i class="fas fa-times"></i></button></div>`);
+            $(`#tag-${tag}`).click(() => removeTag(tag))
+        }
+
+
+        $('#tags').append(`<input id="tag-input" placeholder="Indtast nyt tag..." class="flex-grow text-2xl my-2 px-4">`)
+
+        $('#tag-input').on('keyup', updateTags)
+
+        $('#tag-input').focus();
+    }
+
     $('#content').on('keyup change', updatePreview)
     $('#bold').click(bold);
     $('#italic').click(italic);
@@ -279,7 +325,8 @@
     $('#link').click(link);
 
 
-    let tagsArray = [];
+    $('#tag-input').on('keyup', updateTags)
+
     $('#cancelButton').click(() => window.history.back());
 
     $("#submitButton").on("click", function () {
