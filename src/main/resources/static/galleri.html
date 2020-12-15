@@ -58,7 +58,8 @@
                             removeButton.addEventListener("click", () => {
                                 $.ajax({
                                     method: "DELETE",
-                                    url: "/api/images/" + data[k].image[i].id
+                                    url: "/api/images/" + data[k].image[i].id,
+                                    success: window.location.reload()
                                 })
                             })
                             imageList.append(removeButton)
