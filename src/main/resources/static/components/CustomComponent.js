@@ -6,6 +6,10 @@ export class CustomComponent extends HyperHTMLElement {
         this._state = this.default();
     }
 
+    created() {
+        this.render();
+    }
+
     _state = {}
 
     state() {

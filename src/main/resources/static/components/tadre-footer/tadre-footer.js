@@ -5,10 +5,6 @@ export class TadreFooter extends CustomComponent {
         super();
     }
 
-    created() {
-        this.render();
-    }
-
     render() {
         this.html`
             <div class="mt-16 w-screen h-16 px-16 flex justify-center items-center">
