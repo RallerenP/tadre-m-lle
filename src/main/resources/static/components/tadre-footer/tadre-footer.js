@@ -1,14 +1,26 @@
-import { html, define, children } from 'https://unpkg.com/hybrids@^4/src';
-import { TadreCopyright } from '../tadre-copyright/tadre-copyright.js'
+import {CustomComponent} from "../CustomComponent.js";
 
-export const TadreFooter = {
-    copyright: children(TadreCopyright),
-    src: "",
-    render: ({src, copyright}) => html`
-        <link href="/css/tailwind.min.css" rel="stylesheet">
-        <link href="/css/custom.css" rel="stylesheet">
-        <slot name="copyright" />
-    `
+export class TadreFooter extends CustomComponent {
+    constructor() {
+        super();
+    }
+
+    created() {
+        this.render();
+    }
+
+    render() {
+        this.html`
+            <div class="mt-16 w-screen h-16 px-16 flex justify-center items-center">
+                © Tadre Mølles Venner ${this.state().year} 
+            </div>
+                   
+        `
+    }
+
+    default() {
+        return { year: new Date().getFullYear() }
+    }
 }
 
-define('tadre-footer', TadreFooter);
+TadreFooter.define("tadre-footer")

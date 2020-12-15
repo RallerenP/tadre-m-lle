@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.dto.CreatePageDTO;
 import com.mchg.tadremoelle.models.Page;
 import com.mchg.tadremoelle.services.PageService;
@@ -17,6 +18,7 @@ public class PageController {
         this.pageService = pageService;
     }
 
+    @AuthGuard
     @PostMapping("/")
     public Page add(@RequestBody CreatePageDTO dto) {
         return this.pageService.add(dto);

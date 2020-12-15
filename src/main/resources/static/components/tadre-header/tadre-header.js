@@ -1,11 +1,12 @@
-import {HyperHTMLElement} from "../../HyperHTML/HyperHTMLElement.min.js";
+import { CustomComponent } from "../CustomComponent.js";
 
-const {wire} = HyperHTMLElement;
 
-export class TadreHeader extends HyperHTMLElement {
-    _state = {
-        username: "None",
-        content: null
+
+const {wire} = CustomComponent;
+
+export class TadreHeader extends CustomComponent {
+    constructor() {
+        super();
     }
 
     render() {
@@ -58,18 +59,6 @@ export class TadreHeader extends HyperHTMLElement {
         this.getContent()
     }
 
-    state() {
-        return this._state
-    }
-
-    setState(obj) {
-        this._state = {
-            ...this._state,
-            ...obj
-        }
-        this.render()
-    }
-
     logout() {
         fetch("/api/auth/logout").then(() => window.location.reload())
     }
@@ -103,6 +92,13 @@ export class TadreHeader extends HyperHTMLElement {
         }
 
         this.setState({content});
+    }
+
+    default() {
+        return {
+            username: "None",
+            content: null
+        }
     }
 }
 

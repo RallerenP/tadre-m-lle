@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.dto.CreateTagDTO;
 import com.mchg.tadremoelle.models.Tag;
 import com.mchg.tadremoelle.services.TagService;
@@ -18,6 +19,7 @@ public class TagController {
         this.tagService = tagService;
     }
 
+    @AuthGuard
     @PostMapping("/")
     public Tag add(@RequestBody CreateTagDTO dto) {
         return this.tagService.add(dto);

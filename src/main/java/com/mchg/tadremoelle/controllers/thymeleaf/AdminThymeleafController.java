@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.thymeleaf;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.annotations.GetUser;
 import com.mchg.tadremoelle.models.User;
 import org.springframework.stereotype.Controller;
@@ -9,66 +10,45 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class AdminThymeleafController {
+    @AuthGuard
     @GetMapping("/admin")
-    public String adminDash(@GetUser User u) {
-        if (u == null) {
-            return "redirect:/login.html";
-        } else {
-            return "admin";
-        }
+    public String adminDash() {
+        return "admin";
     }
 
+    @AuthGuard
     @GetMapping("/navbar/edit")
-    public String navbarEditor(@GetUser User u) {
-        if (u == null) {
-            return "redirect:/login.html";
-        } else {
-            return "navbar-editor";
-        }
+    public String navbarEditor() {
+        return "navbar-editor";
     }
 
+    @AuthGuard
     @GetMapping("/events/edit")
-    public String eventEditor(@GetUser User u) {
-        if (u == null) {
-            return "redirect:/login.html";
-        } else {
-            return "events";
-        }
+    public String eventEditor() {
+        return "events";
     }
 
+    @AuthGuard
     @GetMapping("/artikel/opret")
-    public String createPage(@GetUser User u) {
-        if (u == null) {
-            return "redirect:/login.html";
-        } else {
-            return "create-page";
-        }
+    public String createPage() {
+        return "create-page";
     }
 
+    @AuthGuard
     @GetMapping("/prices/edit")
-    public String editPrices(@GetUser User u) {
-        if (u == null) {
-            return "redirect:/login.html";
-        } else {
-            return "edit-price";
-        }
+    public String editPrices() {
+        return "edit-price";
     }
 
+    @AuthGuard
     @GetMapping("/album/new")
-    public String createAlbum(@GetUser User u) {
-        if (u == null) {
-            return "redirect:/login.html";
-        } else {
-            return "create-album";
-        }
+    public String createAlbum() {
+        return "create-album";
     }
 
+    @AuthGuard
     @GetMapping("/signup")
-    public String createUser(@GetUser User u) {
-        if (u == null) {
-            return "redirect:/login.html";
-        } else {
-            return "create-user";
-        }
+    public String createUser() {
+        return "create-user";
     }
 }

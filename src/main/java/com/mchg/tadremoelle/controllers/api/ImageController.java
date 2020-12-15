@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.models.Image;
 import com.mchg.tadremoelle.services.AlbumService;
 import com.mchg.tadremoelle.services.ImageService;
@@ -42,6 +43,7 @@ public class ImageController {
         return Files.readAllBytes(fi.toPath());
     }
 
+    @AuthGuard
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
     public String uploadFile(@RequestParam("file")MultipartFile file, @RequestParam("albumsList") String albumName) {

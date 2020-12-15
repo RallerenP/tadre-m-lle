@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.annotations.GetUser;
 import com.mchg.tadremoelle.dto.AddUserDTO;
 import com.mchg.tadremoelle.dto.LoginDTO;
@@ -33,6 +34,7 @@ public class AuthController {
         return false;
     }
 
+    @AuthGuard
     @GetMapping("/logout")
     public boolean logout(HttpSession session) {
         session.removeAttribute("user");
@@ -45,6 +47,7 @@ public class AuthController {
         else return "None";
     }
 
+    @AuthGuard
     @PostMapping("/signup")
     public boolean signup(@Valid @RequestBody AddUserDTO dto) {
         return this.authService.signUp(dto);
