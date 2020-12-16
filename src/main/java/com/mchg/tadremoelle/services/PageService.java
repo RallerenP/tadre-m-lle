@@ -41,4 +41,9 @@ public class PageService {
     public Page findByUrl(String url) {
         return this.pageRepository.findByUrl(url);
     }
+
+    public void deleteById(long id){
+        System.out.println("test2" + id);
+        pageRepository.deleteById(id);
+    }
 }
