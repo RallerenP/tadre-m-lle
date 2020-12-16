@@ -35,12 +35,12 @@
                 $('<div class="max-w-xl mx-auto flex justify-center my-8"></div>').append(
                     $('<div id="test" class="flex-grow"></div>').html(document.createElement("title").innerText = title),
                     $('<div class="flex">' +
-                        '<button id="update-' + url + '" class="block uppercase mx-auto shadow bg-green-600 hover:bg-green-500 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-5 rounded">Rediger</button>' +
+                        '<button id="update-' + id + '" class="block uppercase mx-auto shadow bg-green-600 hover:bg-green-500 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-5 rounded">Rediger</button>' +
                         '<button id="delete-' + id + '" class="block uppercase mx-auto shadow bg-red-600 hover:bg-red-500 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-5 rounded">Slet</button>' +
                         '</div>'),
                 )
             );
-            // $('#update-' + url).click(()=>{updatePage(url)})
+             $('#update-' + id).click(()=>{window.location.href = `/sider/rediger/${url}`})
             $('#delete-' + id).click(()=>{deletePage(id)})
         }
     })
