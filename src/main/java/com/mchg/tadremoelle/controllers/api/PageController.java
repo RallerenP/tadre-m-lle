@@ -34,4 +34,11 @@ public class PageController {
     public List<Page> findAll() {
         return this.pageService.findAll();
     }
+
+    @AuthGuard
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable("id") long id){
+        System.out.println("test1" + id);
+        pageService.deleteById(id);
+    }
 }

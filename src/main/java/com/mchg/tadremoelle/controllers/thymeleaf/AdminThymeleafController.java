@@ -51,4 +51,11 @@ public class AdminThymeleafController {
     public String createUser() {
         return "create-user";
     }
+
+    @AuthGuard
+    @GetMapping("/sider")
+    public String pageList() {
+        return "page-list";
+    }
+
 }

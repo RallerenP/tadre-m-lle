@@ -44,6 +44,20 @@ public class ImageController {
     }
 
     @AuthGuard
+    @DeleteMapping("/{id}")
+    public void deleteImage(@PathVariable("id") Long id) {
+        File f = new File(imageService.getImageById(id).getImageUrl());
+        if (f.delete()) {
+            System.out.println(f.getName() + " deleted");
+            imageService.deleteImage(id);
+        }
+        else {
+            System.out.println("File deletion failed");
+        }
+
+    }
+
+    @AuthGuard
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
     public String uploadFile(@RequestParam("file")MultipartFile file, @RequestParam("albumsList") String albumName) {

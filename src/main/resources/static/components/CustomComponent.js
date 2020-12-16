@@ -1,4 +1,4 @@
-import { HyperHTMLElement } from "../HyperHTML/HyperHTMLElement.min.js";
+import { HyperHTMLElement } from "/HyperHTML/HyperHTMLElement.min.js";
 
 export class CustomComponent extends HyperHTMLElement {
     constructor() {

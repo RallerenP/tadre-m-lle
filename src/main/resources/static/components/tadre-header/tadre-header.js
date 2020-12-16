@@ -40,7 +40,7 @@ export class TadreHeader extends CustomComponent {
                             
                     }): ''}
                     ${this.state().username !== "None" ?
-                        HyperHTMLElement.wire(this)` 
+                        wire(this)` 
                             <a class="px-4 hover:underline" href="/admin">Admin Dashboard</a>
                             <button class="px-4 hover:underline" onclick="${this.logout}">Log Ud</button>
                         `
