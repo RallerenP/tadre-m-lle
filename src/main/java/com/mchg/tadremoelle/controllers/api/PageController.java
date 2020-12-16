@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.dto.CreatePageDTO;
 import com.mchg.tadremoelle.models.Page;
 import com.mchg.tadremoelle.services.PageService;
@@ -17,6 +18,7 @@ public class PageController {
         this.pageService = pageService;
     }
 
+    @AuthGuard
     @PostMapping("/")
     public Page add(@RequestBody CreatePageDTO dto) {
         return this.pageService.add(dto);
@@ -33,6 +35,7 @@ public class PageController {
         return this.pageService.findAll();
     }
 
+    @AuthGuard
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") long id){
         System.out.println("test1" + id);
