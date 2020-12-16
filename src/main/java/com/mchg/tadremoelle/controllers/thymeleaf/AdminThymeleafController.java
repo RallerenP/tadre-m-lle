@@ -58,4 +58,10 @@ public class AdminThymeleafController {
         return "page-list";
     }
 
+    @AuthGuard
+    @GetMapping("/sider/rediger/**")
+    public String pageEditor() {
+        return "edit-page";
+    }
+
 }

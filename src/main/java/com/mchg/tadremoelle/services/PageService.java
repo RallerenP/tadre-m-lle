@@ -1,6 +1,7 @@
 package com.mchg.tadremoelle.services;
 
 import com.mchg.tadremoelle.dto.CreatePageDTO;
+import com.mchg.tadremoelle.dto.EditPageDTO;
 import com.mchg.tadremoelle.models.Page;
 import com.mchg.tadremoelle.models.Tag;
 import com.mchg.tadremoelle.repositories.PageRepository;
@@ -45,5 +46,22 @@ public class PageService {
     public void deleteById(long id){
         System.out.println("test2" + id);
         pageRepository.deleteById(id);
+    }
+
+    public Page updatePage(EditPageDTO dto) {
+        Page p = this.pageRepository.findById(dto.getId());
+        p.setContent(dto.getContent());
+        p.setTitle(dto.getTitle());
+        p.setUrl(dto.getUrl());
+        p.setImage(dto.getImage());
+        p.getTags().clear();
+
+        for (String tagName : dto.getTags()) {
+            p.getTags().add( tagService.add( tagName ));
+        }
+
+        pageRepository.save(p);
+
+        return p;
     }
 }
