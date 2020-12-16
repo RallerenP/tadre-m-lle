@@ -41,7 +41,7 @@ public class AdminThymeleafController {
     }
 
     @AuthGuard
-    @GetMapping("/album/new")
+    @GetMapping("/album/ny")
     public String createAlbum() {
         return "create-album";
     }
