@@ -40,7 +40,7 @@
                         '</div>'),
                 )
             );
-            $('#update-' + url).click(()=>{updatePage(url)})
+            // $('#update-' + url).click(()=>{updatePage(url)})
             $('#delete-' + id).click(()=>{deletePage(id)})
         }
     })
@@ -49,18 +49,18 @@
         $.ajax({
             method: "DELETE",
             url: "/api/pages/" + id,
-            success: window.location.reload()
+            success: window.location.reload
         })
     }
 
-    function updatePage(url){
-        console.log(url)
-        $.ajax({
-            method: "GET",
-            url: "/api/pages/" + url,
-            success: window.location.href(editPage2);
-        })
-    }
+    // function updatePage(url){
+    //     console.log(url)
+    //     $.ajax({
+    //         method: "GET",
+    //         url: "/api/pages/" + url,
+    //         success: window.location.href(editPage2);
+    //     })
+    // }
 </script>
 </body>
 </html>
