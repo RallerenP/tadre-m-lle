@@ -26,6 +26,7 @@ public class PriceController {
 
     @GetMapping("/")
     public List<Price> findAll() {
+
         return this.priceService.findAll();
     }
 
