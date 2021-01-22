@@ -7,6 +7,7 @@ pipeline {
         DB_URL = credentials('DB_URL')
         DB_USER = credentials('DB_USER')
         DB_PASS = credentials('DB_PASS')
+        SSH_ENDPOINT = credentials('SSH_ENDPOINT')
     }
 
     stages {
@@ -31,9 +32,9 @@ pipeline {
                 sshagent(credentials: ['SSH_CREDENTIALS']) {
                     sh "ls /"
                     sh "ls /deploy/"
-                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@34.235.77.148 'sudo rm -rf /tadre/ && sudo mkdir /tadre && sudo chmod 777 /tadre'"
-                    sh "scp -v -o StrictHostKeyChecking=no /deploy/tadre.tar ubuntu@34.235.77.148:/tadre/tadre.tar"
-                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@34.235.77.148 'sudo docker stop tadre || true && sudo docker rm tadre || true && sudo docker rmi tadre:latest || true && sudo docker load < /tadre/tadre.tar && sudo docker create --name tadre -p 8081:8081 -v /tmp/:/datapath/ --env DB_URL=\${DB_URL} --env DB_USER=\${DB_USER} --env DB_PASS=\${DB_PASS} tadre:latest && sudo docker start tadre'"
+                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@${SSH_ENDPOINT} 'sudo rm -rf /tadre/ && sudo mkdir /tadre && sudo chmod 777 /tadre'"
+                    sh "scp -v -o StrictHostKeyChecking=no /deploy/tadre.tar ubuntu@${SSH_ENDPOINT}:/tadre/tadre.tar"
+                    sh "ssh -v -o StrictHostKeyChecking=no ubuntu@${SSH_ENDPOINT} 'sudo docker stop tadre || true && sudo docker rm tadre || true && sudo docker rmi tadre:latest || true && sudo docker load < /tadre/tadre.tar && sudo docker create --name tadre -p 8081:8081 -v /tmp/:/datapath/ --env DB_URL=\${DB_URL} --env DB_USER=\${DB_USER} --env DB_PASS=\${DB_PASS} tadre:latest && sudo docker start tadre'"
                 }
             }
         }
