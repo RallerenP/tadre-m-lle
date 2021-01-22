@@ -47,7 +47,6 @@ public class AuthController {
         else return "None";
     }
 
-    @AuthGuard
     @PostMapping("/signup")
     public boolean signup(@Valid @RequestBody AddUserDTO dto) {
         return this.authService.signUp(dto);
