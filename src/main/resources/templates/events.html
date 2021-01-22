@@ -2,7 +2,7 @@
 <html class="bg-default h-screen w-screen overflow-x-hidden" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Priser</title>
+    <title>openinghours</title>
     <link href="/css/tailwind.min.css" rel="stylesheet">
     <link href="/css/custom.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -11,50 +11,52 @@
 </head>
 <body class="h-full w-full">
 <tadre-header></tadre-header>
-<tadre-title>Pris</tadre-title>
+<tadre-title>Åbningstider</tadre-title>
 <div class="w-1/4 max-w-xl mx-auto flex flex-col justify-center my-8">
     <div class="w-full h-16 bg-red-700 hidden" id="error">VERY ERROR</div>
     <div class="w-full h-16 bg-green-700 hidden" id="success">VERY DONE</div>
-    <h1 class="text-5xl">Priser:</h1>
-    <label for="adult">
-        <span class="block font-bold">Voksne:</span>
-        <input id="adult" type="number" class="w-full border placeholder py-3 px-6 font-inter">
+    <h1 class="text-5xl">Åbningstider:</h1>
+    <label for="start">
+        <span class="block font-bold">Event start:</span>
+        <input id="start" type="date" class="w-full border placeholder py-3 px-6 font-inter">
     </label>
-    <label for="groupx">
-        <span class="block font-bold">Grupper min. 15 per.</span>
-        <input id="groupx" type="number" class="w-full border placeholder py-3 px-6 font-inter">
+    <label for="end">
+        <span class="block font-bold">Event slut:</span>
+        <input id="end" type="date" class="w-full border placeholder py-3 px-6 font-inter">
     </label>
-    <label for="teen">
-        <span class="block font-bold">Børn og unge under 18</span>
-        <input id="teen" type="number" class="w-full border placeholder py-3 px-6 font-inter"/>
+    <label for="text">
+        <span class="block font-bold">Beskrivelse af event</span>
+        <input id="text" type="text" class="w-full border placeholder py-3 px-6 font-inter">
+    </label>
+    <label for="time">
+        <span class="block font-bold">Tidsrum</span>
+        <input id="time" type="text" class="w-full border placeholder py-3 px-6 font-inter"/>
     </label>
     <div class="w-auto my-4">
-        <button id="updateButton" class="float-right text-xl mx-2">Opdater ➜</button>
+        <button id="addButton" class="float-right text-xl mx-2">Opret ➜</button>
         <button id="cancelButton" class="float-right text-xl mx-2">Annullér</button>
     </div>
 </div>
-<tadre-footer>
-    <tadre-copyright slot="copyright"></tadre-copyright>
-</tadre-footer>
+<tadre-footer></tadre-footer>
 <script>
     $('#cancelButton').click(() => {
         window.history.back();
     })
 
-    $('#updateButton').click(() => {
-        update();
+    $('#addButton').click(() => {
+        add();
     })
 
     $('#password').on('keyup', (e) => {
         if (e.originalEvent.key === "Enter") create();
     })
 
-    const update = () => {
-        const data = { adult: $('#adult').val(), teen: $('#teen').val(), groupx: $('#groupx').val() }
+    const add = () => {
+        const data = {start: $('#start').val(), end: $('#end').val(), text: $('#text').val(), time: $('#time').val()}
 
         $.ajax({
-            url: "/api/price/{1}",
-            method: "PUT",
+            url: "/api/openinghours/",
+            method: "POST",
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: () => {

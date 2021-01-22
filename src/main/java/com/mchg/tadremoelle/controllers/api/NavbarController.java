@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.annotations.GetUser;
 import com.mchg.tadremoelle.dto.AddNavbarDTO;
 import com.mchg.tadremoelle.models.User;
@@ -22,6 +23,7 @@ public class NavbarController {
         return this.configService.getNavbar();
     }
 
+    @AuthGuard
     @PostMapping("/navbar")
     public void setNavbarLinks(@RequestBody AddNavbarDTO navbarDTO, @GetUser User user) {
         if (user == null) {

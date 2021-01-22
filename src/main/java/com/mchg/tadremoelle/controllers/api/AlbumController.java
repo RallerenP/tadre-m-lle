@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.dto.CreateAlbumDTO;
 import com.mchg.tadremoelle.models.Album;
 import com.mchg.tadremoelle.services.AlbumService;
@@ -25,6 +26,7 @@ public class AlbumController {
         return this.albumService.findAll();
     }
 
+    @AuthGuard
     @CrossOrigin(origins = "*")
     @PostMapping("/")
     public Album add(@RequestBody CreateAlbumDTO albumDTO, HttpServletResponse response) {

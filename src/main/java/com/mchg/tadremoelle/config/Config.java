@@ -1,8 +1,10 @@
 package com.mchg.tadremoelle.config;
 
+import com.mchg.tadremoelle.interceptors.AuthGuardInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -12,9 +14,16 @@ import java.util.List;
 @EnableWebMvc
 public class Config implements WebMvcConfigurer {
     private final GetUserResolver getUserResolver;
+    private final AuthGuardInterceptor authGuardInterceptor;
 
-    public Config(GetUserResolver getUserResolver) {
+    public Config(GetUserResolver getUserResolver, AuthGuardInterceptor authGuardInterceptor) {
         this.getUserResolver = getUserResolver;
+        this.authGuardInterceptor = authGuardInterceptor;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(this.authGuardInterceptor);
     }
 
     @Override

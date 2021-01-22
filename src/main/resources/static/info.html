@@ -22,15 +22,15 @@
             </tr>
             <tr>
                 <td class="pr-10">Voksne:</td>
-                <td id="adult"> kr</td>
+                <td id="adult"></td>
             </tr>
             <tr>
                 <td class="pr-10">Grupper (min 15 pers):</td>
-                <td id="groupx"> kr</td>
+                <td id="groupx"></td>
             </tr>
             <tr>
                 <td class="pr-10">Børn og unge under 18 år:</td>
-                <td id="teen"> kr</td>
+                <td id="teen"></td>
             </tr>
         </table>
     </div>
@@ -47,23 +47,14 @@
             </tr>
             </thead>
             <tbody id="my-table">
-            <tr>
-                <td id="start"></td>
-                <td id="end"></td>
-                <td id="text"></td>
-                <td class="pl-5" id="time"></td>
-            </tr>
+<!--            <tr>-->
+<!--                <td id="start"></td>-->
+<!--                <td id="end"></td>-->
+<!--                <td id="text"></td>-->
+<!--                <td class="pl-5" id="time"></td>-->
+<!--            </tr>-->
             </tbody>
         </table>
-
-        <!--                <tr>-->
-        <!--                    <td class="pr-10">Voksne:</td>-->
-        <!--                    <td>? kr</td>-->
-        <!--                    <td>? kr</td>-->
-        <!--                    <td>? kr</td>-->
-        <!--                </tr>-->
-        <!--            </table>-->
-        <!--        </div>-->
     </div>
 </tadre-content>
 
@@ -71,33 +62,24 @@
 
     let openList = document.getElementById("open");
 
-    // $.ajax({
-    //     method: "GET",
-    //     url: "/api/openinghours/"
-    // }).done(function (data) {
-    //     console.log(data)
-    //
-    //     for (let m = 0; m < data.length; m++) {
-    //         console.log(data[m]);
-    //         document.getElementById("open").innerHTML = data;
-    //
-    //     }
-    //
-    // })
+
     $.ajax({
         method: "GET",
         url: "/api/openinghours/"
     }).done(function (data) {
-        let x, txt = "";
+        let x, txt = "", start, end, text, time;
 
         for (x in data) {
-            start = data[x].start.substr(8, 2) + " - " + data[x].start.substr(5, 2)
-            end = data[x].end.substr(8, 2) + " - " + data[x].end.substr(5, 2)
+            console.log(data[x])
+            start = new Date(data[x].start).toDateString();
+            start = new Date(data[x].end).toDateString();
+            // start = data[x].start.substr(8, 2) + " - " + data[x].start.substr(5, 2)
+            // end = data[x].end.substr(8, 2) + " - " + data[x].end.substr(5, 2)
             text = data[x].text
             time = data[x].time;
 
             $('#my-table').append(
-                $('<tr></tr>').append(
+                    $('<tr></tr>').append(
                     $('<td></td>').html(document.createElement("start").innerText = start),
                     $('<td></td>').html(document.createElement("end").innerText = end),
                     $('<td></td>').html(document.createElement("text").innerText = text),
@@ -111,13 +93,17 @@
         method: "GET",
         url: "/api/price/"
     }).done(function (data) {
-        let x, txt = "";
+        let x, txt = "", adult, groupx, teen;
+
+        console.log(data);
 
         for (x in data) {
             adult = data[x].adult;
             groupx = data[x].groupx;
             teen = data[x].teen;
         }
+
+        if (!adult && !groupx && !teen) return;
 
         document.getElementById("adult").innerText = adult + " kr";
         document.getElementById("groupx").innerText = groupx + " kr";

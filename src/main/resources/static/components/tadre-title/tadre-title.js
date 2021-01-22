@@ -12,3 +12,5 @@ export const TadreTitle = {
 }
 
 define('tadre-title', TadreTitle);
+
+// TadreTitle.define('tadre-title')

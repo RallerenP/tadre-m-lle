@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.dto.OpeningHoursDTO;
 import com.mchg.tadremoelle.models.OpeningHours;
 import com.mchg.tadremoelle.services.OpeningHoursService;
@@ -17,10 +18,12 @@ public class OpeningHoursController {
         this.openingHoursService = openingHoursService;
     }
 
+    @AuthGuard
     @PostMapping("/")
     public OpeningHours add(@RequestBody OpeningHoursDTO dto) {
         return this.openingHoursService.add( dto );
     }
+
     @GetMapping("/")
     public List<OpeningHours> findAll() {
         return this.openingHoursService.findAll();

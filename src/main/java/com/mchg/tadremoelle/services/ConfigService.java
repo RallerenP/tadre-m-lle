@@ -22,7 +22,10 @@ public class ConfigService {
     }
 
     private String getValueByKey(String key) {
-        return this.configRepository.getConfigByKey(key).getValue();
+        Config conf = this.configRepository.getConfigByKey(key);
+
+        if (conf == null) return null;
+        return conf.getValue();
     }
 
     private void setValueByKey(String key, String value) {

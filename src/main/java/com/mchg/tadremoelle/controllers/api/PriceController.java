@@ -1,5 +1,6 @@
 package com.mchg.tadremoelle.controllers.api;
 
+import com.mchg.tadremoelle.annotations.AuthGuard;
 import com.mchg.tadremoelle.dto.PriceDTO;
 import com.mchg.tadremoelle.models.Price;
 import com.mchg.tadremoelle.services.PriceService;
@@ -17,6 +18,7 @@ public class PriceController {
         this.priceService = priceService;
     }
 
+    @AuthGuard
     @PutMapping("/{id}")
     public Price update(@RequestBody PriceDTO dto) {
         return this.priceService.update(dto);
@@ -24,6 +26,7 @@ public class PriceController {
 
     @GetMapping("/")
     public List<Price> findAll() {
+
         return this.priceService.findAll();
     }
 

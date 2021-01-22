@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="bg-default h-screen w-screen overflow-x-hidden" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tadre Mølle / opret</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link href="/css/custom.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7bc581f92a.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.0.2/markdown-it.min.js" integrity="sha512-7VN0JcGJWL+i8LXzTvbROqUSPzZIu8Fp6GWpkVwtHwrgWwY8CrbZgyHA2YpNhAASQNrYqGYoI2HusCqV+S2xnQ==" crossorigin="anonymous"></script>
+    <script type="module" src="/components/index.js"></script>
+
+</head>
+<body class="h-full w-full">
+<tadre-header ></tadre-header>
+<tadre-title small="true">Opret ny side!</tadre-title>
+<div class="flex w-3/4 max-w-4xl mx-auto flex-col justify-center items-center p-8 m-8">
+    <div class="border bg-white rounded-t w-full pt-4 pr-4 pl-4">
+        <input id="title" placeholder="Titel" class="w-full text-2xl border rounded bg-gray-100 px-4">
+        <input id="title-image" placeholder="Hoved Billede (Indsæt link)" class="w-full mt-2 text-2xl border rounded bg-gray-100 px-4">
+        <div class="flex w-full mt-2 ">
+            <div class="flex-grow"></div>
+            <div class="">
+                <button id="header" class="h-12 w-12 hover:bg-gray-300"><i class="fas fa-heading"></i></button>
+                <button id="bold" class="h-12 w-12 hover:bg-gray-300"><i class="fas fa-bold"></i></button>
+                <button id="italic" class="h-12 w-12 hover:bg-gray-300"><i class="fas fa-italic"></i></button>
+                <div class="h-12 w-12 inline-block"></div>
+                <button id="quote" class="h-12 w-12 hover:bg-gray-300"><i class="fas fa-quote-right"></i></button>
+                <button id="code" class="h-12 w-12 hover:bg-gray-300"><i class="fas fa-code"></i></button>
+                <button id="link" class="h-12 w-12 hover:bg-gray-300"><i class="fas fa-link"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white border rounded-b flex-grow w-full p-4 flex flex-col">
+        <b>Content</b>
+        <textarea id="content" class="bg-transparent w-full h-full rounded border"></textarea>
+        <hr class="my-2">
+        <b>Preview</b>
+        <div id="preview" class="rounded border" style="min-height: 48px;">
+
+        </div>
+        <div id="tags" class="p-2 flex flex-wrap">
+            <input id="tag-input" placeholder="Indtast nyt tag..." class="flex-grow text-2xl px-4">
+        </div>
+
+        <div class="flex mt-2">
+            <div class="flex-grow"></div>
+            <button id="cancelButton" class="w-16 mx-1 rounded bg-red-500 text-white">Cancel</button>
+            <button id="submitButton" class="w-16 mx-1 rounded bg-green-500 text-white">Confirm</button>
+        </div>
+
+    </div>
+</div>
+
+<tadre-footer></tadre-footer>
+
+<script>
+    const tagsArray = [];
+
+    function updatePreview() {
+        const md = window.markdownit();
+        const result = md.render($('#content').val());
+        $('#preview')[0].innerHTML = result
+    }
+
+    function bold() {
+        const input = $('#content')[0];
+
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+
+        if (end + 2 <= input.value.length &&
+            input.value.substring(start-2, start) === '**' &&
+            input.value.substring(end, end + 2) === "**")
+        {
+            const updated =
+                input.value.substring(0, start - 2) +
+                input.value.substring(start, end) +
+                input.value.substring(end + 2, input.value.length);
+
+            input.value = updated
+
+            $('#content').focus();
+
+            input.selectionStart = start - 2;
+            input.selectionEnd = end - 2;
+
+            updatePreview()
+            return;
+        }
+        const selection = input.value.substring(start, end)
+
+        const updated = input.value.substring(0, start) + "**" + selection + "**" + input.value.substring(end, input.value.length)
+        input.value = updated
+
+        $('#content').focus();
+
+        input.selectionStart = start + 2;
+        input.selectionEnd = end + 2;
+
+        updatePreview()
+    }
+
+    function italic() {
+        const input = $('#content')[0];
+
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+
+        if (end + 1 <= input.value.length &&
+            input.value.substring(start-1, start) === '*' &&
+            input.value.substring(end, end + 1) === "*")
+        {
+            if (end + 2 <= input.value.length &&
+                input.value.substring(start-2, start) !== '**' &&
+                input.value.substring(end, end + 2) !== "**") {
+                const updated =
+                    input.value.substring(0, start - 1) +
+                    input.value.substring(start, end) +
+                    input.value.substring(end + 1, input.value.length);
+
+                input.value = updated
+
+                $('#content').focus();
+
+                input.selectionStart = start - 1;
+                input.selectionEnd = end - 1;
+
+                updatePreview()
+                return;
+            }
+        }
+
+
+        const selection = input.value.substring(start, end)
+        const updated = input.value.substring(0, start) + "*" + selection + "*" + input.value.substring(end, input.value.length)
+
+        input.value = updated
+
+        $('#content').focus();
+
+        input.selectionStart = start + 1;
+        input.selectionEnd = end + 1;
+
+        updatePreview()
+    }
+
+    function header() {
+        const input = $('#content')[0]
+
+        const start = input.selectionStart;
+
+        let i = 0;
+
+        for (i = start - 1; i >= 0; i--) {
+            if (input.value[i] === '\n') break;
+        }
+        let updated;
+
+        if (i === -1) {
+            if (input.value[0] === "#")
+                updated = input.value.substring(0, i + 1) + '#' + input.value.substring(i, input.value.length);
+            else
+                updated = input.value.substring(0, i + 1) + '# ' + input.value.substring(i + 1, input.value.length);
+        } else {
+            if (input.value[i + 1] === "#")
+                updated = input.value.substring(0, i + 1) + '#' + input.value.substring(i + 1, input.value.length);
+            else
+                updated = input.value.substring(0, i + 1) + '# ' + input.value.substring(i + 1, input.value.length);
+        }
+
+        input.value = updated;
+
+
+        $('#content').focus();
+
+        input.selectionStart = start + 1;
+        input.selectionEnd = start + 1;
+        updatePreview();
+    }
+
+    function quote() {
+        const input = $('#content')[0]
+
+        const start = input.selectionStart;
+
+        let i = 0;
+
+        for (i = start - 1; i >= 0; i--) {
+            if (input.value[i] === '\n') break;
+        }
+        let updated = input.value;
+
+        if (i === -1) {
+            if (input.value[0] !== ">")
+                updated = input.value.substring(0, i + 1) + '> ' + input.value.substring(i + 1, input.value.length);
+        } else {
+            if (input.value[i + 1] !== ">")
+                updated = input.value.substring(0, i + 1) + '> ' + input.value.substring(i + 1, input.value.length);
+        }
+
+        input.value = updated;
+
+
+        $('#content').focus();
+
+        input.selectionStart = start + 1;
+        input.selectionEnd = start + 1;
+        updatePreview();
+    }
+
+    function code() {
+        const input = $('#content')[0];
+
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+
+        if (end + 2 <= input.value.length &&
+            input.value.substring(start-2, start) === '``' &&
+            input.value.substring(end, end + 2) === "``")
+        {
+            const updated =
+                input.value.substring(0, start - 2) +
+                input.value.substring(start, end) +
+                input.value.substring(end + 2, input.value.length);
+
+            input.value = updated
+
+            $('#content').focus();
+
+            input.selectionStart = start - 2;
+            input.selectionEnd = end - 2;
+
+            updatePreview()
+            return;
+        }
+        const selection = input.value.substring(start, end)
+
+        const updated = input.value.substring(0, start) + "``" + selection + "``" + input.value.substring(end, input.value.length)
+        input.value = updated
+
+        $('#content').focus();
+
+        input.selectionStart = start + 2;
+        input.selectionEnd = end + 2;
+
+        updatePreview()
+    }
+
+    function link() {
+        const link = prompt('Enter link');
+
+        const input = $('#content')[0];
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        const selection = input.value.substring(start, end);
+
+        const updated =
+            input.value.substring(0, start) +
+            "[" +
+            selection +
+            "](" +
+            link +
+            ")" +
+            input.value.substring(end, input.value.length)
+
+        input.value = updated;
+
+        $('#content').focus();
+
+        input.selectionStart = start + 1;
+        input.selectionEnd = end + 1;
+
+        updatePreview()
+    }
+
+    function updateTags(e) {
+        if (e.originalEvent.key === "Enter") {
+            const value = e.currentTarget.value;
+
+            if (tagsArray.indexOf(value) !== -1) return;
+
+            tagsArray.push(value);
+
+            renderTags();
+        } else if (e.originalEvent.key === "Backspace") {
+            if (e.currentTarget.value.length === 0) {
+                tagsArray.pop();
+                renderTags();
+            }
+        };
+
+
+    }
+
+    function removeTag(tag) {
+        tagsArray.splice(tagsArray.indexOf(tag));
+        renderTags();
+    }
+
+    function renderTags() {
+        $('#tags').empty();
+
+        for (const tag of tagsArray) {
+            $('#tags').append(`<div class="bg-gray-300 flex-shrink-0 rounded m-2 p-2">${tag} <button id="tag-${tag}"><i class="fas fa-times"></i></button></div>`);
+            $(`#tag-${tag}`).click(() => removeTag(tag))
+        }
+
+
+        $('#tags').append(`<input id="tag-input" placeholder="Indtast nyt tag..." class="flex-grow text-2xl my-2 px-4">`)
+
+        $('#tag-input').on('keyup', updateTags)
+
+        $('#tag-input').focus();
+    }
+
+    $('#content').on('keyup change', updatePreview)
+    $('#bold').click(bold);
+    $('#italic').click(italic);
+    $('#header').click(header);
+    $('#quote').click(quote);
+    $('#code').click(code);
+    $('#link').click(link);
+
+
+    $('#tag-input').on('keyup', updateTags)
+
+    $('#cancelButton').click(() => window.history.back());
+
+    $("#submitButton").on("click", function () {
+        const title = $("#title").val();
+        const content = $("#content").val();
+        const url = urlConverter(title);
+        const imageUrl = $("#title-image").val();
+
+        const data = JSON.stringify({
+            title: title,
+            content: content,
+            url: `${url}`,
+            tags: tagsArray,
+            image: imageUrl
+        })
+
+        $.ajax({
+            url: '/api/pages/',
+            contentType: "application/json",
+            method: 'POST',
+            data: data,
+            success: (data) => {
+                window.location.href = `/artikel/${data.url}`
+            }
+        })
+
+        function urlConverter(url) {
+            let tmp = url.toLowerCase();
+            tmp = tmp.replace(/æ/g, "ae")
+            tmp = tmp.replace(/ø/g, "oe")
+            tmp = tmp.replace(/å/g, "aa")
+            return tmp.replace(/[\W_]+/g,"-");
+        }
+    });
+
+
+    $("#addTags").on("click", function () {
+        let tags = $("#tags").val();
+        tagsArray.push(tags);
+        console.log(tagsArray);
+        tagsOverview();
+
+        function tagsOverview (){
+            const p = document.getElementById('tagsviewer');
+            p.innerHTML = tagsArray;
+            // message.append(p);
+        }
+
+
+    })
+
+
+</script>
+
+</body>
+</html>
