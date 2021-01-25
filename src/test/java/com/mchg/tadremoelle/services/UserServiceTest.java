@@ -24,6 +24,11 @@ class UserServiceTest {
     }
 
     @Test
+    void dummy() {
+        assertTrue(false);
+    }
+
+    @Test
     void findUserByUsername() {
         User expected = new User();
         expected.setId(0L);
