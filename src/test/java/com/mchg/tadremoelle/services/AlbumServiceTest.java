@@ -59,7 +59,7 @@ class AlbumServiceTest {
         Album actual = albumService.transform(albumDTO);
 
         Album expected = new Album();
-        expected.setAlbumName("TEST");
+        expected.setAlbumName("TEST1");
         expected.setImage(new ArrayList<>());
 
         assertEquals(expected, actual);
