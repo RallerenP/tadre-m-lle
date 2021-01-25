@@ -22,6 +22,7 @@ public class PageController {
     @AuthGuard
     @PostMapping("/")
     public Page add(@RequestBody CreatePageDTO dto) {
+
         return this.pageService.add(dto);
     }
 

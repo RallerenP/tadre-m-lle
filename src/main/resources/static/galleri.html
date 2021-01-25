@@ -56,11 +56,11 @@
                             removeButton.addEventListener("click", () => {
                                 $.ajax({
                                     method: "DELETE",
-                                    url: "/api/images/" + data[k].image[i].id,
+                                    url: "/student/" + data[k].id,
                                     success: window.location.reload()
                                 })
                             })
-                            imageList.append(removeButton)
+                            studentList.append(removeButton)
                         }
                     }
                 }
