@@ -29,6 +29,7 @@ class AlbumServiceTest {
 
     @Test
     void findAll() {
+        assertEquals(1, 2);
     }
 
     @Test
